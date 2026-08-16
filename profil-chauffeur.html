@@ -41,7 +41,7 @@
         <li style="margin-bottom: 8px; font-size: 14px;"><strong style="display:inline-block; width: 60px;">Immat:</strong> <span id="immatChauffeur">0000</span></li>
       </ul>
       
-      <button class="btn btn-contour" style="margin-top: 20px;">Modifier infos</button>
+      <button class="btn btn-contour" style="margin-top: 20px;" onclick="preparerEditProfil()">Modifier infos</button>
     </aside>
 
     <!-- Contenu Principal -->
@@ -155,6 +155,78 @@
   </div>
 </div>
 
+<!-- Modal: Editar Perfil -->
+<div id="modalEditProfil" class="modal-overlay">
+  <div class="modal-content" style="max-width: 400px;">
+    <div class="modal-header">
+      <h3 style="color:var(--vert); font-size:20px;">Modifier mes informations</h3>
+    </div>
+    <div class="modal-body">
+      <form id="formEditProfil">
+        <label style="display:block; margin-bottom:10px;">
+          <span style="display:block; font-size:14px; margin-bottom:4px; font-weight:bold;">Zone de travail</span>
+          <input type="text" id="editZone" class="input" style="width:100%; padding:10px;">
+        </label>
+        <label style="display:block; margin-bottom:10px;">
+          <span style="display:block; font-size:14px; margin-bottom:4px; font-weight:bold;">Modèle de Moto</span>
+          <input type="text" id="editMoto" class="input" style="width:100%; padding:10px;">
+        </label>
+        <label style="display:block; margin-bottom:20px;">
+          <span style="display:block; font-size:14px; margin-bottom:4px; font-weight:bold;">Immatriculation</span>
+          <input type="text" id="editImmat" class="input" style="width:100%; padding:10px;">
+        </label>
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="btn btn-contour" style="flex:1;" onclick="closeModal('modalEditProfil')">Annuler</button>
+          <button type="submit" class="btn btn-principal" style="flex:1;">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Llamada Segura -->
+<div id="modalAppel" class="modal-overlay">
+  <div class="modal-content" style="background: #1a1a1a; color: white; text-align: center; border:none;">
+    <div style="padding: 40px 20px;">
+      <div class="perfil-avatar" style="width:80px; height:80px; font-size:30px; margin:0 auto 20px; animation: pulse-green 1.5s infinite; background: #333;">A</div>
+      <h3 style="font-size:24px; margin:0 0 10px;">Appel Sécurisé</h3>
+      <p style="color: #aaa; margin:0 0 40px;">Numéro masqué...</p>
+      
+      <button class="btn btn-principal" style="background:#e63946; border-color:#e63946; border-radius:50px; width:60px; height:60px; padding:0; display:inline-flex; align-items:center; justify-content:center;" onclick="closeModal('modalAppel')">
+        <span style="font-size:24px;">☎</span>
+      </button>
+      <p style="font-size: 14px; margin-top: 15px; color: #888;">Raccrocher</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+.chat-bubble {
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  max-width: 80%;
+}
+.chat-bubble.chauffeur {
+  background: var(--vert);
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 2px;
+}
+.chat-bubble.client {
+  background: #f0f0f0;
+  color: var(--texte);
+  margin-right: auto;
+  border-bottom-left-radius: 2px;
+}
+</style>
+
 <script>
   // Lógica de Modales
   function openModal(id) {
@@ -182,23 +254,58 @@
         </div>
         
         <div style="margin-bottom: 20px;">
-          <button class="btn btn-principal" style="width:100%; background: #12703a; border-color: #12703a; margin-bottom: 8px;" onclick="alert('Appel VoIP en cours... Numéro masqué.')">📞 Appel Sécurisé</button>
+          <button class="btn btn-principal" style="width:100%; background: #12703a; border-color: #12703a; margin-bottom: 8px;" onclick="openModal('modalAppel')">📞 Appel Sécurisé</button>
           <p style="font-size: 11px; text-align: center; color: var(--texte-doux); margin:0;">(Le numéro du client est masqué)</p>
         </div>
 
         <div style="margin-bottom: 20px; text-align: left;">
           <strong style="display:block; font-size: 13px; margin-bottom: 10px; color: var(--texte-doux);">Messages rapides :</strong>
           <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
-            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au client')">Je suis en route</button>
-            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au client')">Je suis arrivé</button>
-            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au client')">Il y a des embouteillages</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="envoyerMessage('Je suis en route')">Je suis en route</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="envoyerMessage('Je suis arrivé')">Je suis arrivé</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="envoyerMessage('Il y a des embouteillages')">Il y a des embouteillages</button>
           </div>
+          <div id="chatCourse" style="margin-top: 15px; display: flex; flex-direction: column;"></div>
         </div>
 
         <button class="btn btn-contour" style="width:100%; margin-top:10px; color: var(--rouge); border-color: var(--rouge);" onclick="closeModal('modalRecevoir')">Terminer / Annuler la course</button>
       </div>
     `;
   }
+
+  function envoyerMessage(texte) {
+    const chatCourse = document.getElementById('chatCourse');
+    if (!chatCourse) return;
+    
+    // Globito del conductor
+    const bubbleChauffeur = document.createElement('div');
+    bubbleChauffeur.className = 'chat-bubble chauffeur';
+    bubbleChauffeur.textContent = texte;
+    chatCourse.appendChild(bubbleChauffeur);
+    
+    // Simular respuesta del cliente 2 segundos despues
+    setTimeout(() => {
+      const bubbleClient = document.createElement('div');
+      bubbleClient.className = 'chat-bubble client';
+      bubbleClient.textContent = "D'accord, je vous attends.";
+      chatCourse.appendChild(bubbleClient);
+    }, 2000);
+  }
+
+  function preparerEditProfil() {
+    document.getElementById('editZone').value = document.getElementById('zoneChauffeur').textContent;
+    document.getElementById('editMoto').value = document.getElementById('motoChauffeur').textContent;
+    document.getElementById('editImmat').value = document.getElementById('immatChauffeur').textContent;
+    openModal('modalEditProfil');
+  }
+
+  document.getElementById('formEditProfil').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('zoneChauffeur').textContent = document.getElementById('editZone').value;
+    document.getElementById('motoChauffeur').textContent = document.getElementById('editMoto').value;
+    document.getElementById('immatChauffeur').textContent = document.getElementById('editImmat').value;
+    closeModal('modalEditProfil');
+  });
 
   // Simular la carga de datos del registro
 
