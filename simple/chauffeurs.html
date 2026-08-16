@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choisissez un chauffeur — Bogna Ni Karama</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/simple.css">
+</head>
+<body>
+
+<div class="bandeau">⚠️ DÉMONSTRATION — chauffeurs fictifs</div>
+
+<div class="ecran">
+
+  <a class="retour" href="quartiers.html">
+    <span class="ico" aria-hidden="true">←</span> Changer de quartier
+  </a>
+
+  <p class="titre-etape" id="titre">
+    Touchez pour appeler
+  </p>
+
+  <div class="liste-chauffeurs" id="liste"></div>
+
+  <p class="pied-simple">
+    <a href="index.html">🏠 Revenir au début</a>
+  </p>
+
+</div>
+
+<script src="assets/simple.js"></script>
+<script>
+(() => {
+  'use strict';
+  const zone = new URLSearchParams(location.search).get('q') || '';
+  const liste = SIMPLE.parQuartier(zone);
+  const ech = SIMPLE.ech;
+
+  document.getElementById('titre').innerHTML = zone
+    ? `${ech(zone)}<small>Touchez un chauffeur pour l'appeler</small>`
+    : `Nos chauffeurs<small>Touchez un chauffeur pour l'appeler</small>`;
+
+  document.getElementById('liste').innerHTML = liste.length
+    ? liste.map(c => `
+        <article class="fiche">
+          <div class="fiche-tete">
+            <div class="avatar" aria-hidden="true">${ech(SIMPLE.initiales(c.nom))}</div>
+            <div>
+              <h2>${ech(c.nom)}</h2>
+              <p class="zone">📍 ${ech(c.zone)} · ${ech(c.moto)}</p>
+            </div>
+          </div>
+
+          <p class="garantie">
+            <span class="ico" aria-hidden="true">🛡️</span>
+            Dossier de séparation
+          </p>
+
+          <a class="appeler" href="tel:+223${c.tel.replace(/\D/g, '')}">
+            <span class="ico" aria-hidden="true">📞</span>
+            Appeler
+          </a>
+          <a class="whatsapp" href="https://wa.me/${SIMPLE.numero(c.tel)}" target="_blank" rel="noopener">
+            <span aria-hidden="true">💬</span> WhatsApp
+          </a>
+        </article>`).join('')
+    : `<div class="rien">
+         <span class="ico" aria-hidden="true">🛵</span>
+         <p>Aucun chauffeur ici pour le moment.</p>
+         <a class="geant" href="tel:+22371029158">
+           <span class="ico" aria-hidden="true">📞</span>
+           Appelez-nous
+         </a>
+       </div>`;
+})();
+</script>
+</body>
+</html>

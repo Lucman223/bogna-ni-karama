@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Où êtes-vous ? — Bogna Ni Karama</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/simple.css">
+</head>
+<body>
+
+<div class="bandeau">⚠️ DÉMONSTRATION — chauffeurs fictifs</div>
+
+<div class="ecran">
+
+  <a class="retour" href="index.html">
+    <span class="ico" aria-hidden="true">←</span> Retour
+  </a>
+
+  <p class="titre-etape">
+    Où êtes-vous ?
+    <small>Touchez votre quartier</small>
+  </p>
+
+  <div class="quartiers" id="quartiers"></div>
+
+  <p class="pied-simple">
+    Vous ne trouvez pas votre quartier ?<br>
+    <a href="tel:+22371029158">📞 Appelez le 71 02 91 58</a>
+  </p>
+
+</div>
+
+<script src="assets/simple.js"></script>
+<script>
+  document.getElementById('quartiers').innerHTML = SIMPLE.QUARTIERS.map(q => `
+    <a class="quartier" href="chauffeurs.html?q=${encodeURIComponent(q.nom)}">
+      <span class="ico" aria-hidden="true">${q.ico}</span>
+      ${SIMPLE.ech(q.nom)}
+    </a>`).join('');
+</script>
+</body>
+</html>

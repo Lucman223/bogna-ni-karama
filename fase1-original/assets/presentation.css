@@ -1,0 +1,344 @@
+/* ============================================================
+   BOGNA NI KARAMA · Présentation navigable
+   Un écran = une diapositive. Flèches, clic ou glissement.
+   ============================================================ */
+
+.corps-presentation {
+  margin: 0; overflow: hidden;
+  background: var(--vert-fonce); color: #fff;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.pont { position: relative; height: 100vh; width: 100%; }
+
+/* --- Une diapositive ----------------------------------------- */
+.diapo {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(28px, 5vw, 64px);
+  overflow-y: auto;
+  opacity: 0; visibility: hidden;
+  transform: translateY(24px);
+  transition: opacity .45s cubic-bezier(.22,1,.36,1),
+              transform .45s cubic-bezier(.22,1,.36,1),
+              visibility 0s .45s;
+}
+.diapo.active {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .5s cubic-bezier(.22,1,.36,1),
+              transform .5s cubic-bezier(.22,1,.36,1),
+              visibility 0s;
+}
+.diapo-int { width: 100%; max-width: 1060px; margin: 0 auto; }
+
+/* Fonds alternés pour rythmer la présentation */
+.diapo--sombre { background: linear-gradient(150deg, var(--vert-fonce), var(--vert)); }
+.diapo--clair  { background: var(--fond); color: var(--texte); }
+.diapo--or     { background: linear-gradient(150deg, #2a1f00, #4a3800); }
+
+/* --- Typographie ---------------------------------------------- */
+.diapo h1 {
+  font-size: clamp(30px, 5.4vw, 60px); line-height: 1.06;
+  margin: 0 0 20px; letter-spacing: -1.6px; font-weight: 800;
+}
+.diapo h2 {
+  font-size: clamp(24px, 3.8vw, 42px); line-height: 1.12;
+  margin: 0 0 18px; letter-spacing: -1.1px; font-weight: 800;
+}
+.diapo h3 { font-size: clamp(18px, 2.2vw, 23px); margin: 0 0 10px; letter-spacing: -.4px; }
+.diapo p  { font-size: clamp(15px, 1.9vw, 19px); line-height: 1.6; margin: 0 0 16px; }
+.diapo .grand { font-size: clamp(17px, 2.3vw, 22px); }
+.diapo em { font-style: normal; color: var(--or); }
+.diapo--clair em { color: var(--vert); }
+
+.oeil-diapo {
+  display: inline-block; margin-bottom: 16px;
+  padding: 6px 15px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.1px;
+  background: rgba(242,183,5,.17); color: var(--or-clair);
+  border: 1px solid rgba(242,183,5,.36);
+}
+.diapo--clair .oeil-diapo { background: #e8f2ea; color: var(--vert); border-color: #c5dccb; }
+
+/* --- Grilles internes ----------------------------------------- */
+.duo-diapo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 52px); align-items: center; }
+.trio-diapo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+.bloc-diapo {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px; padding: clamp(18px, 2.4vw, 26px);
+}
+.diapo--clair .bloc-diapo { background: #fff; border-color: var(--bord); box-shadow: var(--ombre); }
+
+.bloc-diapo--phare { border: 2px solid var(--or); background: rgba(242,183,5,.11); }
+.diapo--clair .bloc-diapo--phare { border-color: var(--vert); background: #f4faf5; }
+
+/* --- Chiffres clés -------------------------------------------- */
+.chiffres-diapo { display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 52px); margin-top: 8px; }
+.chiffre-diapo strong {
+  display: block; font-size: clamp(30px, 5vw, 52px); font-weight: 800;
+  color: var(--or); line-height: 1.05; letter-spacing: -1.6px;
+}
+.diapo--clair .chiffre-diapo strong { color: var(--vert); }
+.chiffre-diapo span { font-size: clamp(13px, 1.5vw, 15px); opacity: .85; }
+
+/* --- Listes ---------------------------------------------------- */
+.liste-diapo { list-style: none; padding: 0; margin: 0; }
+.liste-diapo li {
+  position: relative; padding-left: 32px; margin-bottom: 12px;
+  font-size: clamp(14.5px, 1.75vw, 17px); line-height: 1.5;
+}
+.liste-diapo li::before {
+  content: '✓'; position: absolute; left: 0; top: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(242,183,5,.2); color: var(--or);
+  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+}
+.diapo--clair .liste-diapo li::before { background: #e4f4e8; color: #12703a; }
+
+.liste-diapo--croix li::before { content: '×'; background: rgba(255,255,255,.12); color: rgba(255,255,255,.6); }
+.diapo--clair .liste-diapo--croix li::before { background: #f0f2ef; color: #8a978e; }
+
+/* Liste de frais : des montants, pas des avantages — pas de puce « ✓ ». */
+.liste-diapo--frais li { padding-left: 0; }
+.liste-diapo--frais li::before { content: none; display: none; }
+
+/* --- Prix dans les diapos -------------------------------------- */
+.prix-diapo { margin: 14px 0 16px; }
+.prix-diapo strong {
+  display: block; font-size: clamp(22px, 3vw, 31px); font-weight: 800;
+  letter-spacing: -1.1px; line-height: 1.1; color: var(--or);
+}
+.diapo--clair .prix-diapo strong { color: var(--vert); }
+.prix-diapo span { display: block; font-size: 14px; opacity: .78; margin-top: 3px; }
+
+.badge-phare {
+  display: inline-block; background: var(--or); color: #2a1f00;
+  padding: 4px 13px; border-radius: 999px; margin-bottom: 12px;
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px;
+}
+.diapo--clair .badge-phare { background: var(--vert); color: #fff; }
+
+/* --- Sommaire de la présentation -------------------------------- */
+.sommaire-diapo {
+  list-style: none; padding: 0; margin: 18px 0 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px 30px;
+}
+.sommaire-diapo li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 7px 0; border-bottom: 1px solid var(--bord);
+  font-size: clamp(14px, 1.7vw, 16.5px); font-weight: 500;
+}
+.sommaire-diapo li span {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: #e8f2ea; color: var(--vert);
+  font-size: 12.5px; font-weight: 800;
+  display: grid; place-items: center;
+}
+
+@media (max-width: 860px) {
+  .sommaire-diapo { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* --- Avant / après : deux colonnes contrastées ------------------ */
+.bloc-avant, .bloc-apres {
+  border-radius: 16px; padding: clamp(16px, 2.2vw, 24px);
+}
+.bloc-avant { background: #fdf1f1; border: 1px solid #f3d4d4; }
+.bloc-apres { background: #eef5f0; border: 1px solid #c9dfd0; }
+.bloc-avant h3 { color: #a51b1b; margin: 0 0 12px; }
+.bloc-apres h3 { color: var(--vert); margin: 0 0 12px; }
+.bloc-avant .liste-diapo li::before { background: #f7dcdc; color: #b34b4b; }
+.bloc-apres .liste-diapo li::before { background: #e4f4e8; color: #12703a; }
+
+/* Phrase de conclusion d'une diapositive */
+.phrase-forte {
+  margin: 22px 0 0; font-size: clamp(15px, 1.95vw, 18.5px);
+  font-weight: 700; line-height: 1.4; letter-spacing: -.2px;
+}
+.diapo--clair .phrase-forte { color: var(--vert); }
+.phrase-forte em { font-style: normal; }
+.diapo--clair .phrase-forte em { color: var(--texte); }
+
+/* --- Étapes numérotées ----------------------------------------- */
+.etapes-diapo { list-style: none; counter-reset: etape; padding: 0; margin: 0; }
+.etapes-diapo li {
+  counter-increment: etape; position: relative;
+  padding-left: 40px; margin-bottom: 14px;
+  font-size: clamp(13.5px, 1.6vw, 15.5px); line-height: 1.45;
+  opacity: .88;
+}
+.etapes-diapo li strong { display: block; opacity: 1; font-size: clamp(14.5px, 1.75vw, 16.5px); margin-bottom: 2px; }
+.etapes-diapo li::before {
+  content: counter(etape);
+  position: absolute; left: 0; top: 0;
+  width: 27px; height: 27px; border-radius: 50%;
+  background: var(--vert); color: #fff;
+  font-size: 13px; font-weight: 800;
+  display: grid; place-items: center;
+}
+.etapes-diapo--or li::before { background: var(--or); color: #2a1f00; }
+
+/* --- Photos réelles dans les diapositives ---------------------- */
+.photo-diapo { margin: 0; }
+.photo-diapo img {
+  width: 100%; height: auto; display: block;
+  border-radius: 16px; background: rgba(255,255,255,.06);
+  box-shadow: 0 16px 44px rgba(0,0,0,.34);
+}
+.photo-diapo figcaption {
+  margin-top: 11px; text-align: center; font-size: 14px;
+  opacity: .82; font-style: italic;
+}
+.diapo--clair .photo-diapo img { box-shadow: 0 14px 40px rgba(6,56,28,.2); }
+.photo-diapo--large { max-width: 760px; margin: 0 auto; }
+
+/* --- Schéma du dossier ----------------------------------------- */
+.schema-diapo {
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 18px; padding: clamp(20px, 3vw, 34px);
+}
+.schema-diapo .etage { text-align: center; width: 100%; }
+.schema-diapo .icone { font-size: clamp(30px, 4vw, 42px); display: block; line-height: 1.1; }
+.schema-diapo .nom { font-size: 12.5px; text-transform: uppercase; letter-spacing: .9px; opacity: .78; }
+.schema-diapo .barre {
+  width: 100%; padding: 12px 0; border-radius: 12px; text-align: center;
+  background: var(--or); color: #2a1f00; margin: 5px 0;
+}
+.schema-diapo .barre .nom { opacity: 1; font-weight: 800; color: #2a1f00; }
+
+/* --- Tableau comparatif dans une diapo -------------------------- */
+.tableau-diapo { width: 100%; border-collapse: collapse; font-size: clamp(12.5px, 1.5vw, 15px); }
+.tableau-diapo th, .tableau-diapo td { padding: 9px 12px; text-align: left; }
+.tableau-diapo thead th {
+  font-size: 11.5px; text-transform: uppercase; letter-spacing: .8px;
+  border-bottom: 2px solid var(--bord); white-space: nowrap;
+}
+.tableau-diapo tbody tr { border-bottom: 1px solid #eef1ec; }
+.tableau-diapo .c { text-align: center; }
+.tableau-diapo .phare { background: #f2f8f3; }
+.tableau-diapo .oui { color: #12703a; font-weight: 700; }
+.tableau-diapo .non { color: #c3ccc6; }
+.tableau-diapo .opt {
+  background: var(--or); color: #2a1f00; padding: 2px 8px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px;
+}
+
+/* --- Navigation ------------------------------------------------- */
+.barre-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px clamp(16px, 3vw, 28px);
+  background: rgba(6,56,28,.82); backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.btn-nav {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  color: #fff; width: 40px; height: 40px; border-radius: 10px;
+  font-size: 17px; cursor: pointer; flex-shrink: 0;
+  transition: background .18s, transform .15s;
+}
+.btn-nav:hover:not(:disabled) { background: rgba(255,255,255,.22); transform: translateY(-1px); }
+.btn-nav:disabled { opacity: .3; cursor: not-allowed; }
+
+.compteur-diapo { color: rgba(255,255,255,.8); font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.titre-diapo-nav {
+  color: rgba(255,255,255,.62); font-size: 13px; margin-left: auto;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.piste-progres {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 61;
+  background: rgba(255,255,255,.14);
+}
+.barre-progres { height: 100%; background: var(--or); width: 0; transition: width .4s cubic-bezier(.22,1,.36,1); }
+
+.aide-clavier {
+  position: fixed; bottom: 74px; right: 18px; z-index: 60;
+  background: rgba(0,0,0,.55); color: rgba(255,255,255,.82);
+  padding: 8px 14px; border-radius: 9px; font-size: 12.5px;
+  transition: opacity .5s; pointer-events: none;
+}
+.aide-clavier.parti { opacity: 0; }
+
+/* --- Adaptation mobile ------------------------------------------ */
+@media (max-width: 860px) {
+  .duo-diapo, .trio-diapo { grid-template-columns: 1fr; gap: 18px; }
+  .diapo { padding-bottom: 84px; justify-content: flex-start; padding-top: 42px; }
+  .titre-diapo-nav { display: none; }
+  .aide-clavier { display: none; }
+  /* Sur petit écran, on masque les blocs secondaires trop longs */
+  .cacher-mobile { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diapo { transition: opacity .01ms, visibility .01ms; transform: none !important; }
+  .barre-progres { transition: none; }
+}
+
+/* --- Impression : chaque diapo sur sa page ---------------------- */
+/* ============================================================
+   IMPRESSION / PDF
+   Une diapositive par page, en paysage, avec ses couleurs.
+   Le PDF doit ressembler à ce qui est projeté, pas à un
+   document texte en noir et blanc.
+   ============================================================ */
+@page {
+  size: 297mm 167mm;   /* format 16:9, proche d'une diapositive */
+  margin: 0;
+}
+
+@media print {
+  .barre-nav, .piste-progres, .aide-clavier { display: none !important; }
+
+  .corps-presentation { overflow: visible; background: #fff; }
+  .pont { height: auto; }
+
+  .diapo {
+    position: relative; inset: auto;
+    /* Toutes les diapositives sont visibles : la navigation n'existe plus */
+    opacity: 1 !important; visibility: visible !important; transform: none !important;
+    display: flex !important;
+    width: 297mm; height: 167mm;
+    padding: 14mm 16mm;
+    overflow: hidden;
+    page-break-after: always; break-after: page;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .diapo:last-child { page-break-after: auto; break-after: auto; }
+
+  .diapo-int { max-width: 100%; }
+
+  /* Les fonds colorés doivent être imprimés */
+  .diapo--sombre, .diapo--or, .diapo--clair {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* Un peu plus compact : une diapositive projetée respire plus
+     qu'une page imprimée. */
+  .diapo h1 { font-size: 30pt; }
+  .diapo h2 { font-size: 21pt; margin-bottom: 4mm; }
+  .diapo h3 { font-size: 12pt; }
+  .diapo p  { font-size: 10.5pt; margin-bottom: 3mm; }
+  .diapo .grand { font-size: 11.5pt; }
+  .liste-diapo li { font-size: 10pt; margin-bottom: 2mm; }
+  .bloc-diapo { padding: 5mm; }
+  .trio-diapo, .duo-diapo { gap: 5mm; }
+  .phrase-forte { font-size: 12pt; margin-top: 4mm; }
+  .etapes-diapo li { font-size: 10pt; margin-bottom: 2.5mm; }
+  .etapes-diapo li strong { font-size: 10.5pt; }
+  /* Le comparatif est la diapositive la plus dense : elle a sa
+     propre densité pour que l'en-tête et la conclusion tiennent. */
+  .tableau-diapo { font-size: 7.5pt; }
+  .tableau-diapo th, .tableau-diapo td { padding: 1mm 2.4mm; }
+  .tableau-diapo th { font-size: 6.5pt; }
+  .chiffre-diapo strong { font-size: 30pt; }
+  .sommaire-diapo li { font-size: 10.5pt; padding: 2mm 0; }
+  .photo-diapo img { max-height: 82mm; object-fit: cover; }
+  .photo-diapo figcaption { font-size: 8.5pt; margin-top: 2mm; }
+  .prix-diapo strong { font-size: 15pt; }
+
+  /* Les boutons n'ont pas de sens sur papier */
+  .diapo .btn { display: none; }
+}

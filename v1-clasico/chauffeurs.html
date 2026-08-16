@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nos chauffeurs — Bogna Ni Karama</title>
+<meta name="description" content="Trouvez un chauffeur de moto taxi vérifié près de chez vous à Bamako. Filtrez par quartier et appelez directement.">
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<div class="bandeau-demo">
+  ⚠️ DÉMONSTRATION — les chauffeurs affichés sont fictifs. Seuls les numéros de l'entreprise sont réels.
+</div>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <button class="nav-bascule" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-principale">☰</button>
+    <nav class="nav" id="nav-principale">
+      <a href="index.html">Accueil</a>
+      <a href="chauffeurs.html" class="actif">Nos chauffeurs</a>
+      <a href="index.html#dossier">Le dossier</a>
+      <a href="offres.html">Nos formules</a>
+      <a href="simulateur.html">Simulateur</a>
+      <a class="btn btn-principal btn-petit" href="inscription.html">Devenir chauffeur</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu" class="section">
+  <div class="conteneur">
+
+    <div class="section-titre">
+      <span class="section-oeil">Annuaire</span>
+      <h2>Nos chauffeurs vérifiés</h2>
+      <p>Choisissez votre quartier, appelez le chauffeur. Toutes les fiches ci-dessous ont été contrôlées par nos équipes : identité, moto, immatriculation et dossier de séparation.</p>
+    </div>
+
+    <div class="alerte alerte-info" style="align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 26px; padding: 20px;">
+      <div style="display: flex; gap: 13px; align-items: flex-start; flex: 1; min-width: 250px;">
+        <span class="alerte-icone" aria-hidden="true">💡</span>
+        <div>
+          <strong>Créez un compte client (Gratuit)</strong>
+          <span style="display: block; margin-top: 3px;">Sauvegardez vos chauffeurs favoris, votre quartier et vos trajets réguliers. La recherche reste ouverte à tous.</span>
+        </div>
+      </div>
+      <a href="inscription.html" class="btn btn-principal btn-petit" style="white-space: nowrap; margin-top: 10px;">Créer mon compte</a>
+    </div>
+
+    <div class="barre-filtres">
+      <div class="champ-recherche">
+        <label class="saut-contenu" for="recherche">Rechercher un chauffeur</label>
+        <input type="search" id="recherche" placeholder="Nom, quartier, moto, immatriculation…">
+      </div>
+      <div style="flex:0 1 220px;">
+        <label class="saut-contenu" for="filtre-zone">Filtrer par quartier</label>
+        <select id="filtre-zone">
+          <option value="">Tous les quartiers</option>
+        </select>
+      </div>
+      <button class="btn btn-contour btn-petit" id="btn-reinit" type="button">Réinitialiser</button>
+    </div>
+
+    <p class="garantie-dossier">
+      <span aria-hidden="true">🛡️</span>
+      <span><strong>Toutes nos motos sont équipées du dossier de séparation.</strong>
+      Vous voyagez sans contact physique avec le conducteur, quel que soit le
+      chauffeur que vous choisissez.</span>
+    </p>
+
+    <p id="compteur-resultats" style="color:var(--texte-doux); font-size:14.5px; margin:0 0 20px;"></p>
+
+    <div class="grille-chauffeurs" id="grille"></div>
+
+  </div>
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <div class="marque" style="margin-bottom:14px;">
+          <div class="marque-logo" aria-hidden="true">🛵</div>
+          <div class="marque-texte">
+            <strong>Bogna Ni Karama</strong>
+            <span>Moto Taxi · Bamako</span>
+          </div>
+        </div>
+        <p>Le service de moto taxi de Bamako. Lancement officiel le 8 août 2026, en partenariat avec Sunna TV Savana.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="chauffeurs.html">Nos chauffeurs</a></li>
+          <li><a href="inscription.html">Devenir chauffeur</a></li>
+          <li><a href="admin.html">Espace administration</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Nous joindre</h4>
+        <ul>
+          <li><a href="tel:+22371029158">71 02 91 58</a></li>
+          <li><a href="tel:+22371872774">71 87 27 74</a></li>
+          <li><a href="tel:+22371749813">71 74 98 13</a></li>
+          <li>Bamako, Mali</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© <span data-annee></span> Bogna Ni Karama. Tous droits réservés.</span>
+      <span>Partenaire média : Sunna TV Savana</span>
+    </div>
+  </div>
+</footer>
+
+<a class="flottant-wa" href="https://wa.me/22371029158" target="_blank" rel="noopener" aria-label="Nous écrire sur WhatsApp">
+  <span aria-hidden="true">💬</span>
+</a>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const grille    = document.getElementById('grille');
+  const recherche = document.getElementById('recherche');
+  const selZone   = document.getElementById('filtre-zone');
+  const compteur  = document.getElementById('compteur-resultats');
+
+  // Remplir la liste des quartiers
+  BNK.ZONES.forEach(z => {
+    const o = document.createElement('option');
+    o.value = z; o.textContent = z;
+    selZone.appendChild(o);
+  });
+
+  // Pré-filtre depuis l'URL (?zone=Hamdallaye)
+  const params = new URLSearchParams(location.search);
+  const zoneUrl = params.get('zone');
+  if (zoneUrl && BNK.ZONES.includes(zoneUrl)) selZone.value = zoneUrl;
+
+  function afficher() {
+    // Le public ne voit que les fiches validées — donc uniquement des motos
+    // équipées du dossier : une moto sans dossier n'est jamais validée.
+    const liste = BNK.listerChauffeurs({
+      statut: 'valide',
+      zone: selZone.value,
+      recherche: recherche.value,
+    });
+
+    if (!liste.length) {
+      compteur.textContent = '';
+      grille.innerHTML = `
+        <div class="vide">
+          <div class="vide-icone" aria-hidden="true">🔍</div>
+          <h3>Aucun chauffeur trouvé</h3>
+          <p>Essayez un autre quartier, ou appelez-nous au 71 02 91 58 — nous vous trouvons une moto.</p>
+        </div>`;
+      return;
+    }
+
+    compteur.textContent = `${liste.length} chauffeur${liste.length > 1 ? 's' : ''} disponible${liste.length > 1 ? 's' : ''}`;
+    grille.innerHTML = liste.map(carteChauffeurHtml).join('');
+    // Les cartes sont créées après le scan initial : on les révèle tout de suite.
+    grille.querySelectorAll('.reveal').forEach(el => el.classList.add('dedans'));
+  }
+
+  let minuteur;
+  recherche.addEventListener('input', () => {
+    clearTimeout(minuteur);
+    minuteur = setTimeout(afficher, 180);
+  });
+  selZone.addEventListener('change', afficher);
+  document.getElementById('btn-reinit').addEventListener('click', () => {
+    recherche.value = ''; selZone.value = ''; afficher();
+  });
+
+  afficher();
+})();
+</script>
+</body>
+</html>

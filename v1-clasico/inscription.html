@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inscription — Bogna Ni Karama</title>
+<meta name="description" content="Rejoignez la flotte Bogna Ni Karama à Bamako ou inscrivez-vous comme client pour sauvegarder vos favoris.">
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<div class="bandeau-demo">
+  ⚠️ DÉMONSTRATION — les inscriptions restent dans ce navigateur et ne sont envoyées à personne.
+</div>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <button class="nav-bascule" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-principale">☰</button>
+    <nav class="nav" id="nav-principale">
+      <a href="index.html">Accueil</a>
+      <a href="chauffeurs.html">Nos chauffeurs</a>
+      <a href="offres.html">Nos formules</a>
+      <a href="simulateur.html">Simulateur</a>
+      <a href="inscription.html" class="actif">Inscription</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu" class="section">
+  <div class="conteneur" style="max-width: 600px;">
+
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-avatar">💬</div>
+        <div>
+          <h3>Assistant Bogna Ni Karama</h3>
+          <span>En ligne</span>
+        </div>
+      </div>
+      
+      <div class="chat-messages" id="chatMessages">
+        <!-- Messages will be injected here by JS -->
+      </div>
+      
+      <form class="chat-input-area" id="chatForm">
+        <input type="text" id="chatInput" placeholder="Écrivez votre réponse..." autocomplete="off" disabled>
+        <button type="submit" id="chatBtn" disabled>▶</button>
+      </form>
+    </div>
+
+  </div>
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <div class="marque" style="margin-bottom:14px;">
+          <div class="marque-logo" aria-hidden="true">🛵</div>
+          <div class="marque-texte">
+            <strong>Bogna Ni Karama</strong>
+            <span>Moto Taxi · Bamako</span>
+          </div>
+        </div>
+        <p>Le service de moto taxi de Bamako. Lancement officiel le 8 août 2026, en partenariat avec Sunna TV Savana.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="chauffeurs.html">Nos chauffeurs</a></li>
+          <li><a href="inscription.html">Inscription</a></li>
+          <li><a href="admin.html">Espace administration</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Nous joindre</h4>
+        <ul>
+          <li><a href="tel:+22371029158">71 02 91 58</a></li>
+          <li><a href="tel:+22371872774">71 87 27 74</a></li>
+          <li><a href="tel:+22371749813">71 74 98 13</a></li>
+          <li>Bamako, Mali</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© <span data-annee></span> Bogna Ni Karama. Tous droits réservés.</span>
+      <span>Partenaire média : Sunna TV Savana</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  'use strict';
+  const chatMessages = document.getElementById('chatMessages');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const chatBtn = document.getElementById('chatBtn');
+  
+  let currentStep = 0;
+  let userType = null; // 'client' or 'chauffeur'
+  let userData = {};
+
+  function addBotMessage(text, options = []) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg msg-bot';
+    msgDiv.innerHTML = text;
+    chatMessages.appendChild(msgDiv);
+    
+    if (options.length > 0) {
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'chat-options';
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'chat-btn';
+        btn.textContent = opt.label;
+        btn.onclick = () => {
+          optsDiv.remove();
+          addUserMessage(opt.label);
+          opt.action();
+        };
+        optsDiv.appendChild(btn);
+      });
+      chatMessages.appendChild(optsDiv);
+      chatInput.disabled = true;
+      chatBtn.disabled = true;
+    } else {
+      chatInput.disabled = false;
+      chatBtn.disabled = false;
+      chatInput.focus();
+    }
+    
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg msg-user';
+    msgDiv.textContent = text;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Flujo del chat
+  function nextStep(inputVal) {
+    if (currentStep === 1) { // Pedir nombre
+      userData.nom = inputVal;
+      currentStep++;
+      addBotMessage(`¡Encantado, ${userData.nom}! ¿Cuál es tu número de téléphone? (8 cifras)`);
+    } else if (currentStep === 2) { // Pedir telefono
+      userData.tel = inputVal;
+      currentStep++;
+      if (userType === 'client') {
+        addBotMessage("Genial. ¿En qué quartier (barrio) vives o pides motos con más frecuencia?");
+      } else {
+        addBotMessage("Perfecto. ¿En qué quartier trabajas más a menudo?");
+      }
+    } else if (currentStep === 3) { // Pedir barrio
+      userData.zone = inputVal;
+      if (userType === 'client') {
+        // Finalizar cliente y redirigir
+        const params = new URLSearchParams({ nom: userData.nom, tel: userData.tel, zone: userData.zone }).toString();
+        addBotMessage(`¡Todo listo! Tu cuenta de cliente ha sido creada. Preparando tu panel de control...`);
+        chatInput.disabled = true;
+        chatBtn.disabled = true;
+        setTimeout(() => {
+          window.location.href = 'profil-client.html?' + params;
+        }, 2000);
+      } else {
+        // Seguir con conductor
+        currentStep++;
+        addBotMessage("¿Cuántos años de experiencia tienes conduciendo moto?");
+      }
+    } else if (currentStep === 4) {
+      userData.experience = inputVal;
+      currentStep++;
+      addBotMessage("¿Qué modelo de moto conduces? (Ej: Djakarta 125)");
+    } else if (currentStep === 5) {
+      userData.moto = inputVal;
+      currentStep++;
+      addBotMessage("¿Cuál es tu número de matrícula (immatriculation)?");
+    } else if (currentStep === 6) {
+      userData.immat = inputVal;
+      currentStep++;
+      addBotMessage("¿Tu moto tiene instalado nuestro dossier de separación?", [
+        { label: "Sí, ya lo tiene", action: () => { userData.dossier = true; finishChauffeur(); } },
+        { label: "Aún no", action: () => { userData.dossier = false; finishChauffeur(); } }
+      ]);
+    }
+  }
+  
+  function finishChauffeur() {
+    const params = new URLSearchParams({
+        nom: userData.nom, tel: userData.tel, zone: userData.zone,
+        moto: userData.moto, immat: userData.immat
+    }).toString();
+    
+    let msg = `¡Gracias ${userData.nom}! Tu solicitud de conductor ha sido recibida. Nos comunicaremos contigo al ${userData.tel} en 48h para verificar tus documentos (Permis de conduire, ID, Assurance, etc.).`;
+    if (!userData.dossier) {
+        msg += `<br><br><b>Nota:</b> Como tu moto aún no tiene dossier, te contactaremos con nuestro taller asociado para instalarlo antes de publicar tu ficha.`;
+    }
+    msg += `<br><br>Redirigiendo a tu nuevo panel de control...`;
+    
+    addBotMessage(msg);
+    chatInput.disabled = true;
+    chatBtn.disabled = true;
+    
+    setTimeout(() => {
+      window.location.href = 'profil-chauffeur.html?' + params;
+    }, 4500);
+  }
+
+  // Inicializar chat
+  setTimeout(() => {
+    addBotMessage("I ni ce! (¡Hola!) Bienvenido a Bogna Ni Karama. ¿Qué te gustaría hacer hoy?", [
+      {
+        label: "👤 Registrarme como Cliente",
+        action: () => {
+          userType = 'client';
+          currentStep = 1;
+          addBotMessage("Crear una cuenta te permite guardar tus trayectos, tener conductores favoritos y más. <br><br>Para empezar, ¿cuál es tu nombre y apellido?");
+        }
+      },
+      {
+        label: "🛵 Inscribirme como Conductor",
+        action: () => {
+          userType = 'chauffeur';
+          currentStep = 1;
+          addBotMessage("¡Qué buena decisión! Buscamos a los mejores conductores. <br><br>¿Cómo te llamas (nombre completo)?");
+        }
+      }
+    ]);
+  }, 500);
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = chatInput.value.trim();
+    if (!val) return;
+    
+    addUserMessage(val);
+    chatInput.value = '';
+    
+    // Simular pequeño retardo de escritura del bot
+    setTimeout(() => {
+      nextStep(val);
+    }, 400);
+  });
+})();
+</script>
+</body>
+</html>

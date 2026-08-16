@@ -1,0 +1,963 @@
+/* ============================================================
+   BOGNA NI KARAMA · Feuille de style
+   Couleurs extraites de l'affiche officielle Sunna TV Savana :
+   vert profond, or, rouge.
+   ============================================================ */
+
+:root {
+  --vert:        #0d5c2f;
+  --vert-fonce:  #06381c;
+  --vert-clair:  #14803f;
+  --or:          #f2b705;
+  --or-clair:    #ffd75e;
+  --rouge:       #c81e1e;
+  --fond:        #f6f7f4;
+  --carte:       #ffffff;
+  --texte:       #16241b;
+  --texte-doux:  #5b6b60;
+  --bord:        #e2e7e1;
+  --ombre:       0 1px 2px rgba(6,56,28,.06), 0 8px 24px rgba(6,56,28,.08);
+  --ombre-forte: 0 12px 40px rgba(6,56,28,.16);
+  --rayon:       14px;
+  --max:         1180px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* L'attribut hidden doit toujours gagner : sans cette règle, un
+   `display: grid/flex` plus loin dans la feuille réaffiche un bloc
+   que le JavaScript vient de masquer (cas de l'écran de connexion). */
+[hidden] { display: none !important; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--texte);
+  background: var(--fond);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.conteneur { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+/* --- Accessibilité : lien d'évitement ------------------------ */
+.saut-contenu {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--vert); color: #fff; padding: 12px 20px; border-radius: 0 0 8px 0;
+}
+.saut-contenu:focus { left: 0; }
+
+:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+
+/* ============================================================
+   EN-TÊTE
+   ============================================================ */
+.entete {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bord);
+}
+.entete-int {
+  display: flex; align-items: center; gap: 16px;
+  min-height: 68px;
+}
+.marque { display: flex; align-items: center; gap: 11px; text-decoration: none; margin-right: auto; }
+.marque-logo {
+  width: 42px; height: 42px; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: linear-gradient(140deg, var(--vert), var(--vert-clair));
+  color: var(--or); border-radius: 11px; font-size: 21px;
+  box-shadow: 0 3px 10px rgba(13,92,47,.28);
+}
+.marque-texte strong { display: block; font-size: 16px; line-height: 1.15; letter-spacing: -.2px; }
+.marque-texte span { display: block; font-size: 11px; color: var(--texte-doux); text-transform: uppercase; letter-spacing: .9px; }
+
+.nav { display: flex; align-items: center; gap: 4px; }
+.nav a {
+  padding: 9px 14px; border-radius: 9px; text-decoration: none;
+  font-size: 14.5px; font-weight: 500; color: var(--texte-doux);
+  transition: background .18s, color .18s;
+}
+.nav a:hover { background: #eef2ec; color: var(--vert); }
+.nav a.actif { color: var(--vert); background: #e8f2ea; font-weight: 600; }
+
+.nav-bascule {
+  display: none; background: none; border: 1px solid var(--bord);
+  border-radius: 9px; width: 42px; height: 42px; font-size: 19px;
+  cursor: pointer; color: var(--vert);
+}
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 22px; border-radius: 11px; border: 1px solid transparent;
+  font-size: 15px; font-weight: 600; font-family: inherit;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: transform .15s, box-shadow .2s, background .18s, border-color .18s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-principal { background: var(--vert); color: #fff; box-shadow: 0 4px 14px rgba(13,92,47,.26); }
+.btn-principal:hover { background: var(--vert-clair); box-shadow: 0 7px 20px rgba(13,92,47,.32); }
+
+.btn-or { background: var(--or); color: #2a1f00; box-shadow: 0 4px 14px rgba(242,183,5,.34); }
+.btn-or:hover { background: var(--or-clair); }
+
+.btn-contour { background: transparent; color: var(--vert); border-color: #bcd3c2; }
+.btn-contour:hover { background: #eef4ef; border-color: var(--vert); }
+
+.btn-blanc { background: #fff; color: var(--vert); }
+.btn-blanc:hover { background: #f2f7f3; }
+
+.btn-danger { background: #fdecec; color: var(--rouge); border-color: #f6cccc; }
+.btn-danger:hover { background: var(--rouge); color: #fff; border-color: var(--rouge); }
+
+.btn-petit { padding: 8px 14px; font-size: 13.5px; border-radius: 9px; }
+.btn-large { width: 100%; }
+
+/* ============================================================
+   HÉROS
+   ============================================================ */
+.heros {
+  position: relative; overflow: hidden;
+  background: linear-gradient(150deg, var(--vert-fonce) 0%, var(--vert) 55%, var(--vert-clair) 100%);
+  color: #fff; padding: clamp(56px, 9vw, 104px) 0 clamp(64px, 10vw, 112px);
+}
+.heros::before {
+  content: ''; position: absolute; inset: -30% -10% auto -10%; height: 130%;
+  background: radial-gradient(ellipse 55% 46% at 72% 18%, rgba(242,183,5,.24), transparent 66%);
+  pointer-events: none;
+}
+.heros-int { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 52px; align-items: center; }
+
+.badge-lancement {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: rgba(242,183,5,.16); border: 1px solid rgba(242,183,5,.4);
+  color: var(--or-clair); padding: 7px 15px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; margin-bottom: 22px;
+}
+
+.heros h1 {
+  font-size: clamp(34px, 5.4vw, 56px); line-height: 1.07;
+  margin: 0 0 20px; letter-spacing: -1.4px; font-weight: 800;
+}
+.heros h1 em { font-style: normal; color: var(--or); }
+.heros-texte { font-size: clamp(16px, 2vw, 18.5px); opacity: .92; max-width: 46ch; margin: 0 0 30px; }
+
+.heros-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 34px; }
+
+.heros-chiffres { display: flex; flex-wrap: wrap; gap: 34px; }
+.chiffre strong { display: block; font-size: 29px; font-weight: 800; color: var(--or); line-height: 1.1; }
+.chiffre span { font-size: 13px; opacity: .82; }
+
+/* Carte téléphone flottante */
+.carte-tel {
+  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.19);
+  border-radius: 18px; padding: 26px; backdrop-filter: blur(8px);
+}
+.carte-tel h3 { margin: 0 0 4px; font-size: 16.5px; }
+.carte-tel p { margin: 0 0 18px; font-size: 13.5px; opacity: .8; }
+.ligne-tel {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 15px; margin-bottom: 9px;
+  background: rgba(255,255,255,.1); border-radius: 11px;
+  text-decoration: none; color: #fff; font-weight: 600;
+  font-size: 17px; letter-spacing: .5px;
+  transition: background .18s, transform .15s;
+}
+.ligne-tel:hover { background: rgba(242,183,5,.24); transform: translateX(3px); }
+.ligne-tel:last-of-type { margin-bottom: 0; }
+.ligne-tel .icone { font-size: 18px; }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { padding: clamp(52px, 8vw, 88px) 0; }
+.section-alt { background: #fff; }
+
+.section-titre { text-align: center; max-width: 640px; margin: 0 auto 46px; }
+.section-oeil {
+  display: inline-block; color: var(--vert); background: #e8f2ea;
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.1px;
+  margin-bottom: 14px;
+}
+.section-titre h2 { font-size: clamp(26px, 3.6vw, 38px); margin: 0 0 12px; letter-spacing: -.9px; line-height: 1.15; }
+.section-titre p { color: var(--texte-doux); font-size: 16.5px; margin: 0; }
+
+/* --- Grille de services -------------------------------------- */
+.grille-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 22px; }
+.service {
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 28px 24px; transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.service:hover { transform: translateY(-4px); box-shadow: var(--ombre-forte); border-color: #c9dccd; }
+.service-icone {
+  width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center;
+  background: linear-gradient(140deg, #e8f2ea, #d6e9db); font-size: 24px; margin-bottom: 17px;
+}
+.service h3 { margin: 0 0 9px; font-size: 18.5px; letter-spacing: -.3px; }
+.service p { margin: 0; color: var(--texte-doux); font-size: 15px; }
+
+/* ============================================================
+   LE DOSSIER DE SÉPARATION — la section qui explique l'atout
+   ============================================================ */
+.bloc-dossier {
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 46px; align-items: center;
+  background: var(--carte); border: 1px solid var(--bord); border-radius: 20px;
+  padding: clamp(26px, 4vw, 46px); box-shadow: var(--ombre);
+}
+.bloc-dossier h2 { font-size: clamp(24px, 3.4vw, 34px); margin: 12px 0 16px; letter-spacing: -.8px; line-height: 1.15; }
+.bloc-dossier p { color: var(--texte-doux); font-size: 16px; margin: 0 0 14px; }
+
+.liste-atouts { list-style: none; padding: 0; margin: 22px 0 26px; }
+.liste-atouts li {
+  position: relative; padding-left: 30px; margin-bottom: 11px;
+  font-size: 15.5px; font-weight: 500;
+}
+.liste-atouts li::before {
+  content: '✓'; position: absolute; left: 0; top: -1px;
+  width: 21px; height: 21px; border-radius: 50%;
+  background: #e4f4e8; color: #12703a;
+  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+}
+
+/* Photos réelles du dossier de séparation — la preuve du service.
+   width/height sont dans le HTML : la place est réservée avant le
+   chargement, la page ne saute pas sur une connexion lente. */
+.photo-dossier, .photo-flotte { margin: 0; }
+/* La photo suit la hauteur du texte à côté d'elle */
+.photo-dossier { align-self: center; }
+.photo-dossier img, .photo-flotte img {
+  width: 100%; height: auto; display: block;
+  border-radius: 16px; background: #e8ece9;
+}
+.photo-dossier img {
+  box-shadow: 0 14px 40px rgba(6,56,28,.18);
+}
+.photo-dossier figcaption, .photo-flotte figcaption {
+  margin-top: 11px; font-size: 14px; color: var(--texte-doux);
+  font-style: italic; text-align: center;
+}
+.photo-flotte { margin: 22px 0 26px; }
+.photo-flotte img { border: 1px solid var(--bord); }
+.photo-flotte figcaption { text-align: left; font-style: normal; font-size: 13.5px; }
+
+/* Schéma : passager · dossier · conducteur */
+.bloc-dossier-visuel { text-align: center; }
+.schema-moto {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  background: linear-gradient(165deg, #f2f8f3, #e6f1e9);
+  border: 1px solid #cfe3d5; border-radius: 18px; padding: 30px 22px;
+}
+.schema-personne, .schema-dossier {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  width: 100%;
+}
+.schema-personne .schema-icone { font-size: 38px; line-height: 1.1; }
+.schema-dossier {
+  padding: 11px 0; margin: 3px 0;
+  background: var(--vert); border-radius: 11px; color: #fff;
+  box-shadow: 0 4px 14px rgba(13,92,47,.26);
+}
+.schema-dossier .schema-icone { font-size: 22px; }
+.schema-etiquette { font-size: 12.5px; font-weight: 600; color: var(--texte-doux); text-transform: uppercase; letter-spacing: .8px; }
+.schema-dossier .schema-etiquette { color: #fff; }
+.schema-legende { margin: 14px 0 0; font-size: 14px; color: var(--texte-doux); font-style: italic; }
+
+/* --- Zones ---------------------------------------------------- */
+.puces-zones { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.puce-zone {
+  background: #fff; border: 1px solid var(--bord); border-radius: 999px;
+  padding: 9px 18px; font-size: 14.5px; font-weight: 500;
+  transition: background .18s, color .18s, border-color .18s, transform .15s;
+}
+.puce-zone:hover { background: var(--vert); color: #fff; border-color: var(--vert); transform: translateY(-2px); }
+
+/* ============================================================
+   CHAUFFEURS
+   ============================================================ */
+.barre-filtres {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 16px; margin-bottom: 26px;
+}
+.champ-recherche { position: relative; flex: 1 1 240px; }
+.champ-recherche input { padding-left: 40px; }
+.champ-recherche::before {
+  content: '🔍'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 14px; opacity: .55; pointer-events: none;
+}
+
+/* Garantie affichée au-dessus de l'annuaire : toutes les motos sont équipées */
+.garantie-dossier {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin: 0 0 24px; padding: 15px 18px;
+  background: linear-gradient(100deg, #e8f2ea, #f4faf5);
+  border: 1px solid #bfdcc7; border-left: 4px solid var(--vert);
+  border-radius: 12px; color: var(--texte); font-size: 15px;
+}
+.garantie-dossier > span:first-child { font-size: 20px; line-height: 1.2; flex-shrink: 0; }
+.garantie-dossier strong { color: var(--vert); }
+
+/* Case à cocher « avec dossier » — un filtre, pas une ligne de formulaire */
+.bascule-dossier {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 15px; border: 1px solid var(--bord); border-radius: 11px;
+  background: #fff; cursor: pointer; user-select: none;
+  font-size: 14.5px; font-weight: 600; white-space: nowrap;
+  transition: border-color .18s, background .18s, color .18s;
+}
+.bascule-dossier:hover { border-color: var(--vert); color: var(--vert); }
+.bascule-dossier input { width: auto; margin: 0; accent-color: var(--vert); cursor: pointer; }
+.bascule-dossier:has(input:checked) {
+  background: #e8f2ea; border-color: var(--vert); color: var(--vert);
+}
+/* Dans un formulaire : pleine largeur et texte qui peut passer à la ligne */
+.bascule-large { width: 100%; white-space: normal; padding: 14px 16px; }
+
+.grille-chauffeurs { display: grid; grid-template-columns: repeat(auto-fill, minmax(272px, 1fr)); gap: 20px; }
+
+.carte-chauffeur {
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 22px; display: flex; flex-direction: column;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.carte-chauffeur:hover { transform: translateY(-4px); box-shadow: var(--ombre-forte); border-color: #c9dccd; }
+
+.chauffeur-tete { display: flex; align-items: center; gap: 14px; margin-bottom: 17px; }
+.avatar {
+  width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+  display: grid; place-items: center; object-fit: cover;
+  background: linear-gradient(140deg, var(--vert), var(--vert-clair));
+  color: var(--or); font-weight: 700; font-size: 19px; letter-spacing: .5px;
+}
+.chauffeur-tete h3 { margin: 0 0 3px; font-size: 17px; letter-spacing: -.2px; }
+.chauffeur-zone { margin: 0; font-size: 13.5px; color: var(--texte-doux); }
+
+/* Le dossier de séparation : ce qui distingue Bogna Ni Karama.
+   Assez visible pour se repérer d'un coup d'œil dans la liste. */
+.ruban-dossier {
+  display: flex; align-items: center; gap: 7px;
+  margin: 0 0 15px; padding: 9px 13px;
+  background: linear-gradient(100deg, #e8f2ea, #f3f9f4);
+  border: 1px solid #bfdcc7; border-radius: 10px;
+  color: var(--vert); font-size: 13.5px; font-weight: 700;
+  letter-spacing: .1px;
+}
+.ruban-dossier span { font-size: 15px; }
+
+.chauffeur-infos {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  padding: 15px 0; margin-bottom: 17px;
+  border-top: 1px solid var(--bord); border-bottom: 1px solid var(--bord);
+}
+.info-bloc span { display: block; font-size: 11px; color: var(--texte-doux); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 2px; }
+.info-bloc strong { font-size: 14.5px; font-weight: 600; }
+
+.note { display: flex; align-items: center; gap: 6px; font-size: 14px; margin-bottom: 15px; }
+.note .etoiles { color: var(--or); letter-spacing: 1px; }
+.note .courses { color: var(--texte-doux); font-size: 13px; }
+
+.chauffeur-actions { display: flex; gap: 9px; margin-top: auto; }
+.chauffeur-actions .btn { flex: 1; }
+
+/* Bouton « Réserver en ligne » désactivé : montre ce qu'apporte
+   la formule Complète sans faire croire que ça marche déjà. */
+.action-verrouillee {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 9px; padding: 9px 12px;
+  border: 1px dashed #c8d2ca; border-radius: 9px;
+  background: #f8faf8; color: #8a978e; text-decoration: none;
+  font-size: 13px; font-weight: 600;
+  transition: border-color .18s, color .18s, background .18s;
+}
+.action-verrouillee:hover { border-color: var(--or); color: #7d5606; background: #fffaef; }
+.mini-formule {
+  background: #eef1ec; color: #6b7a70; padding: 2px 8px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+}
+.action-verrouillee:hover .mini-formule { background: var(--or); color: #2a1f00; }
+
+/* --- Étiquettes de statut ------------------------------------ */
+.etiquette {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 11px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: .2px; white-space: nowrap;
+}
+.etiquette::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.et-valide     { background: #e4f4e8; color: #12703a; }
+.et-attente    { background: #fef4dd; color: #96690a; }
+.et-refuse     { background: #fdecec; color: #b52020; }
+.et-suspendu   { background: #eeecfb; color: #5745b8; }
+.et-equipement { background: #e0f4f2; color: #0a6b61; }
+
+/* --- Message vide -------------------------------------------- */
+.vide { text-align: center; padding: 62px 20px; color: var(--texte-doux); grid-column: 1 / -1; }
+.vide-icone { font-size: 46px; margin-bottom: 14px; opacity: .5; }
+.vide h3 { margin: 0 0 7px; color: var(--texte); font-size: 18px; }
+.vide p { margin: 0; font-size: 15px; }
+
+/* ============================================================
+   FORMULAIRES
+   ============================================================ */
+.carte-formulaire {
+  background: var(--carte); border: 1px solid var(--bord); border-radius: 18px;
+  padding: clamp(24px, 4vw, 40px); box-shadow: var(--ombre);
+  max-width: 680px; margin: 0 auto;
+}
+.groupe { margin-bottom: 19px; }
+.groupe label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 7px; }
+.groupe label .requis { color: var(--rouge); }
+.groupe .aide { display: block; font-size: 12.5px; color: var(--texte-doux); font-weight: 400; margin-top: 5px; }
+
+input, select, textarea {
+  width: 100%; padding: 12px 15px;
+  border: 1px solid var(--bord); border-radius: 11px;
+  font-size: 15.5px; font-family: inherit; color: var(--texte);
+  background: #fff; transition: border-color .18s, box-shadow .18s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--vert);
+  box-shadow: 0 0 0 3px rgba(13,92,47,.13);
+}
+input[aria-invalid="true"], select[aria-invalid="true"] {
+  border-color: var(--rouge); box-shadow: 0 0 0 3px rgba(200,30,30,.11);
+}
+.erreur { display: none; color: var(--rouge); font-size: 13px; margin-top: 5px; font-weight: 500; }
+.erreur.visible { display: block; }
+
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+/* --- Alertes -------------------------------------------------- */
+.alerte {
+  display: flex; gap: 13px; align-items: flex-start;
+  padding: 16px 18px; border-radius: 12px; margin-bottom: 22px; font-size: 14.5px;
+}
+.alerte-icone { font-size: 19px; line-height: 1.3; flex-shrink: 0; }
+.alerte strong { display: block; margin-bottom: 3px; }
+.alerte-info    { background: #e8f1fb; color: #17457e; }
+.alerte-succes  { background: #e4f4e8; color: #12703a; }
+.alerte-attention { background: #fef4dd; color: #7d5606; }
+.alerte-erreur  { background: #fdecec; color: #b52020; }
+
+/* --- Bandeau démo -------------------------------------------- */
+.bandeau-demo {
+  background: repeating-linear-gradient(45deg, #2a1f00, #2a1f00 12px, #33260a 12px, #33260a 24px);
+  color: var(--or-clair); text-align: center; padding: 9px 20px;
+  font-size: 13px; font-weight: 600; letter-spacing: .2px;
+}
+.bandeau-demo a { color: #fff; }
+
+/* ============================================================
+   INSCRIPTION EN ÉTAPES
+   Le parcours est visible : le chauffeur voit ce qu'on lui
+   demande et où il en est. Entrer dans la flotte se mérite.
+   ============================================================ */
+.parcours-inscription {
+  display: flex; align-items: flex-start; gap: 4px;
+  max-width: 720px; margin: 0 auto 30px;
+}
+.jalon {
+  flex: 1; text-align: center; position: relative;
+  padding-top: 34px;
+}
+/* La barre qui relie les jalons */
+.jalon::before {
+  content: ''; position: absolute; top: 13px; left: -50%; right: 50%;
+  height: 2px; background: var(--bord);
+}
+.jalon:first-child::before { display: none; }
+.jalon.fait::before, .jalon.actif::before { background: var(--vert); }
+
+.jalon-pastille {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #fff; border: 2px solid var(--bord); color: var(--texte-doux);
+  display: grid; place-items: center;
+  font-size: 12.5px; font-weight: 800;
+  transition: background .25s, border-color .25s, color .25s;
+}
+.jalon.actif .jalon-pastille {
+  background: var(--vert); border-color: var(--vert); color: #fff;
+  box-shadow: 0 0 0 4px rgba(13,92,47,.14);
+}
+.jalon.fait .jalon-pastille {
+  background: #e4f4e8; border-color: var(--vert); color: #12703a;
+}
+.jalon-nom {
+  font-size: 12.5px; font-weight: 600; color: var(--texte-doux);
+  line-height: 1.3; padding: 0 4px;
+}
+.jalon.actif .jalon-nom { color: var(--vert); font-weight: 700; }
+.jalon.fait .jalon-nom { color: var(--texte); }
+
+/* --- Une étape du formulaire ---------------------------------- */
+.etape-form { display: none; }
+.etape-form.visible { display: block; animation: etapeEntre .35s cubic-bezier(.22,1,.36,1); }
+@keyframes etapeEntre { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.etape-tete { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--bord); }
+.etape-compte {
+  display: inline-block; background: #e8f2ea; color: var(--vert);
+  padding: 3px 12px; border-radius: 999px; margin-bottom: 9px;
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .9px;
+}
+.etape-tete h3 { margin: 0 0 5px; font-size: 20px; letter-spacing: -.4px; }
+.etape-tete p { margin: 0; font-size: 14.5px; color: var(--texte-doux); }
+
+.etape-pieds {
+  display: flex; gap: 10px; align-items: center;
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--bord);
+}
+.etape-pieds .btn-suite { margin-left: auto; }
+
+/* --- Pièces à fournir ------------------------------------------ */
+.piece {
+  display: flex; align-items: flex-start; gap: 12px;
+  border: 1px solid var(--bord); border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 10px;
+  transition: border-color .18s, background .18s;
+}
+.piece:has(input:checked) { border-color: var(--vert); background: #f4faf5; }
+.piece input { width: auto; margin: 2px 0 0; accent-color: var(--vert); flex-shrink: 0; cursor: pointer; }
+/* Le titre et son étiquette sur la même ligne, alignés proprement */
+.piece-texte strong {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  font-size: 14.5px; margin-bottom: 3px;
+}
+.piece-texte span { display: block; font-size: 13px; color: var(--texte-doux); }
+.piece-obligatoire {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px;
+  background: #fef4dd; color: #96690a; padding: 2px 8px; border-radius: 999px;
+  white-space: nowrap; line-height: 1.6;
+}
+
+/* --- Récapitulatif avant envoi --------------------------------- */
+.recap { border: 1px solid var(--bord); border-radius: 12px; overflow: hidden; }
+.recap-ligne {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 11px 16px; border-bottom: 1px solid #eef1ec; font-size: 14.5px;
+}
+.recap-ligne:last-child { border-bottom: none; }
+.recap-ligne:nth-child(even) { background: #fbfcfa; }
+.recap-ligne dt { color: var(--texte-doux); margin: 0; }
+.recap-ligne dd { margin: 0; font-weight: 600; text-align: right; }
+
+@media (max-width: 620px) {
+  .jalon-nom { font-size: 10.5px; }
+  .etape-pieds { flex-wrap: wrap; }
+  .etape-pieds .btn { flex: 1; }
+  .etape-pieds .btn-suite { margin-left: 0; }
+}
+
+/* ============================================================
+   PAGE DES FORMULES
+   ============================================================ */
+.grille-offres {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px; align-items: start;
+}
+
+.carte-offre {
+  position: relative;
+  background: var(--carte); border: 1px solid var(--bord); border-radius: 18px;
+  padding: 28px 24px; display: flex; flex-direction: column;
+  transition: transform .25s, box-shadow .25s;
+}
+.carte-offre:hover { transform: translateY(-4px); box-shadow: var(--ombre-forte); }
+
+/* La formule mise en avant : plus grande, encadrée en vert */
+.carte-offre--phare {
+  border: 2px solid var(--vert); box-shadow: var(--ombre-forte);
+  padding-top: 40px;
+}
+.ruban-phare {
+  position: absolute; top: -1px; left: 50%; transform: translate(-50%, -50%);
+  background: var(--vert); color: #fff; white-space: nowrap;
+  padding: 6px 18px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .3px;
+  box-shadow: 0 4px 14px rgba(13,92,47,.3); margin: 0;
+}
+
+.carte-offre h3 { margin: 0 0 4px; font-size: 24px; letter-spacing: -.6px; }
+.offre-accroche { margin: 0 0 18px; color: var(--texte-doux); font-size: 15px; font-weight: 500; }
+
+.offre-prix { margin: 0 0 16px; }
+.offre-prix strong {
+  display: block; font-size: 27px; font-weight: 800;
+  color: var(--vert); letter-spacing: -1px; line-height: 1.15;
+}
+.offre-prix span { display: block; font-size: 14px; color: var(--texte-doux); margin-top: 3px; }
+
+.offre-pour {
+  margin: 0 0 18px; padding-bottom: 18px; border-bottom: 1px solid var(--bord);
+  font-size: 15px; color: var(--texte-doux);
+}
+
+.offre-capacite { display: grid; gap: 10px; margin: 0 0 18px; }
+.offre-capacite > div { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.offre-capacite dt { font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: var(--texte-doux); }
+.offre-capacite dd { margin: 0; font-size: 14.5px; font-weight: 600; text-align: right; }
+
+.liste-absents { list-style: none; padding: 0; margin: 16px 0 0; }
+.liste-absents li {
+  position: relative; padding-left: 30px; margin-bottom: 9px;
+  font-size: 14.5px; color: var(--texte-doux);
+}
+.liste-absents li::before {
+  content: '—'; position: absolute; left: 0; top: -1px;
+  width: 21px; height: 21px; border-radius: 50%;
+  background: #f0f2ef; color: #8a978e;
+  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+}
+
+.note-prix {
+  text-align: center; color: var(--texte-doux); font-size: 14.5px;
+  margin: 28px auto 0; max-width: 60ch;
+}
+
+/* --- Tableau comparatif --------------------------------------- */
+.col-centre { text-align: center; }
+.col-phare { background: #f2f8f3; }
+thead .col-phare { background: #e4f0e7; }
+#tableau-comparatif .oui { color: #12703a; font-size: 17px; font-weight: 700; }
+#tableau-comparatif .non { color: #b9c3bc; font-size: 15px; }
+.ligne-prix td { background: #f7f9f6; padding-top: 16px; padding-bottom: 16px; }
+.ligne-prix strong { color: var(--vert); font-size: 15.5px; }
+.ligne-prix small { color: var(--texte-doux); font-size: 12.5px; }
+
+#tableau-comparatif .opt {
+  background: var(--or); color: #2a1f00; padding: 2px 9px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px;
+}
+
+/* --- Suivi du trajet en direct -------------------------------- */
+.carte-suivi {
+  background: var(--carte); border: 2px solid var(--vert); border-radius: 18px;
+  padding: clamp(22px, 3.4vw, 34px); box-shadow: var(--ombre-forte);
+}
+.suivi-entete {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px solid var(--bord);
+}
+.suivi-exige {
+  display: flex; align-items: center; gap: 9px; margin: 0;
+  background: #e8f2ea; border: 1px solid #c5dccb; border-radius: 999px;
+  padding: 8px 16px; font-size: 13.5px; font-weight: 600; color: var(--vert);
+}
+.suivi-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); }
+.suivi-cartes { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--bord); }
+.grille-cartes { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+.carte-carte {
+  position: relative;
+  background: #fbfcfa; border: 1px solid var(--bord); border-radius: 14px; padding: 20px;
+}
+.carte-carte--phare { border-color: var(--vert); background: #f4faf5; }
+.carte-carte h4 { margin: 10px 0 6px; font-size: 16.5px; letter-spacing: -.3px; }
+.carte-prix { margin: 0 0 14px; font-size: 14px; font-weight: 700; color: var(--vert); }
+.badge-carte {
+  display: inline-block; background: var(--vert); color: #fff;
+  padding: 3px 11px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px;
+}
+.badge-carte--option { background: #eef1ec; color: var(--texte-doux); }
+
+/* Le travail à faire — une carte numérotée par chantier */
+.grille-travaux {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;
+}
+.carte-travail {
+  position: relative;
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 24px 22px 22px 22px;
+}
+.numero-travail {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--vert); color: #fff;
+  font-size: 14px; font-weight: 800; margin-bottom: 12px;
+}
+.carte-travail h3 { margin: 0 0 9px; font-size: 17px; letter-spacing: -.3px; }
+.carte-travail p { margin: 0; font-size: 14.5px; color: var(--texte-doux); }
+
+@media (max-width: 820px) {
+  .suivi-duo, .grille-cartes { grid-template-columns: 1fr; }
+}
+
+/* --- Frais de fonctionnement ---------------------------------- */
+.grille-frais {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+}
+.carte-frais {
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 24px;
+}
+.carte-frais h3 { margin: 0 0 16px; font-size: 18px; letter-spacing: -.3px; }
+
+.liste-frais { list-style: none; padding: 0; margin: 0; }
+.liste-frais li {
+  display: flex; justify-content: space-between; gap: 14px; align-items: flex-start;
+  padding: 11px 0; border-bottom: 1px solid #eef1ec;
+}
+.liste-frais li:last-child { border-bottom: none; }
+.frais-poste { font-size: 14.5px; font-weight: 500; }
+.frais-poste small { display: block; color: var(--texte-doux); font-size: 12.5px; font-weight: 400; margin-top: 2px; }
+.frais-prix { font-size: 14.5px; font-weight: 700; white-space: nowrap; text-align: right; }
+.frais-prix small { font-weight: 400; color: var(--texte-doux); }
+.frais-prix em { color: #12703a; font-style: normal; }
+
+.frais-total {
+  display: flex; justify-content: space-between; gap: 12px; align-items: baseline;
+  margin: 16px 0 0; padding-top: 14px; border-top: 2px solid var(--bord);
+  font-size: 14.5px;
+}
+.frais-total strong { color: var(--vert); font-size: 15.5px; text-align: right; }
+
+/* --- Option application --------------------------------------- */
+.grille-app { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; align-items: start; }
+.carte-app {
+  position: relative;
+  background: var(--carte); border: 1px solid var(--bord); border-radius: 18px;
+  padding: 28px 24px;
+}
+.carte-app--phare { border: 2px solid var(--vert); padding-top: 40px; box-shadow: var(--ombre-forte); }
+.carte-app h3 { margin: 0 0 14px; font-size: 21px; letter-spacing: -.5px; }
+.app-titre-liste {
+  margin: 20px 0 10px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .9px; color: var(--texte-doux);
+}
+.frais-boutique { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--bord); }
+
+/* --- Maintenance ---------------------------------------------- */
+.prix-maintenance { margin: 0 0 18px; }
+.prix-maintenance strong {
+  font-size: 28px; font-weight: 800; color: var(--vert); letter-spacing: -1px;
+}
+.prix-maintenance span { display: block; font-size: 14.5px; color: var(--texte-doux); margin-top: 3px; }
+
+@media (max-width: 700px) {
+  .carte-offre--phare, .carte-app--phare { padding-top: 44px; }
+  .ruban-phare { font-size: 11.5px; padding: 5px 14px; white-space: normal; text-align: center; max-width: 90%; }
+}
+
+/* ============================================================
+   PANNEAU ADMIN
+   ============================================================ */
+.admin-corps { background: #eef1ed; min-height: 100vh; }
+
+.admin-entete {
+  background: var(--vert-fonce); color: #fff;
+  padding: 15px 0; position: sticky; top: 0; z-index: 100;
+}
+.admin-entete-int { display: flex; align-items: center; gap: 16px; }
+.admin-entete .marque-texte strong, .admin-entete .marque-texte span { color: #fff; }
+.admin-entete .marque-texte span { opacity: .65; }
+.admin-nav { display: flex; gap: 6px; margin-left: auto; align-items: center; flex-wrap: wrap; }
+.admin-nav a, .admin-nav button {
+  color: rgba(255,255,255,.82); text-decoration: none; font-size: 14px; font-weight: 500;
+  padding: 8px 13px; border-radius: 9px; background: none; border: none;
+  font-family: inherit; cursor: pointer; transition: background .18s, color .18s;
+}
+.admin-nav a:hover, .admin-nav button:hover { background: rgba(255,255,255,.13); color: #fff; }
+
+/* --- Tuiles statistiques ------------------------------------- */
+.grille-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); gap: 15px; margin-bottom: 26px; }
+.tuile {
+  background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon);
+  padding: 20px; position: relative; overflow: hidden;
+}
+.tuile::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--vert);
+}
+.tuile.t-attente::after  { background: var(--or); }
+.tuile.t-suspendu::after { background: #5745b8; }
+.tuile.t-dossier::after  { background: #0f9b8e; }
+.tuile.t-note::after     { background: var(--rouge); }
+.tuile span { display: block; font-size: 12px; color: var(--texte-doux); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+.tuile strong { font-size: 30px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+
+/* --- Fonctions verrouillées (formule supérieure) --------------
+   On montre ce que la formule Complète apporte : les chiffres sont
+   flous derrière un voile, le message explique ce qu'on débloque. */
+.bloc-verrouille {
+  position: relative; overflow: hidden;
+  border: 1px dashed #b9c9bd; border-radius: var(--rayon);
+  padding: 20px 20px 34px; margin-bottom: 26px; background: #fbfcfa;
+  min-height: 260px;   /* de la place pour le message et le bouton */
+}
+.verrou-tete { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.verrou-tete h2 { margin: 0; font-size: 17px; color: var(--texte-doux); }
+.etiquette-formule {
+  background: var(--or); color: #2a1f00; padding: 4px 12px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .7px;
+}
+.grille-verrouillee { filter: blur(4px); opacity: .55; pointer-events: none; user-select: none; margin: 0; }
+
+.verrou-voile {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px; text-align: center;
+  padding: 24px; background: linear-gradient(180deg, rgba(251,252,250,.72), rgba(251,252,250,.95));
+}
+.verrou-icone { font-size: 28px; margin: 0; }
+.verrou-titre { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -.3px; }
+.verrou-texte { margin: 0 0 6px; max-width: 52ch; font-size: 14.5px; color: var(--texte-doux); }
+
+/* --- Tableau -------------------------------------------------- */
+.carte-tableau {
+  background: var(--carte); border: 1px solid var(--bord);
+  border-radius: var(--rayon); overflow: hidden;
+}
+.tableau-tete {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+  padding: 17px 20px; border-bottom: 1px solid var(--bord);
+}
+.tableau-tete h2 { margin: 0; font-size: 17.5px; margin-right: auto; }
+
+.enveloppe-tableau { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 780px; }
+th {
+  text-align: left; padding: 12px 16px; font-size: 11.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .8px; color: var(--texte-doux);
+  background: #f7f9f6; border-bottom: 1px solid var(--bord); white-space: nowrap;
+}
+td { padding: 14px 16px; border-bottom: 1px solid #eef1ec; font-size: 14.5px; vertical-align: middle; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: #fafcf9; }
+
+.cellule-nom { display: flex; align-items: center; gap: 11px; }
+.cellule-nom .avatar { width: 38px; height: 38px; font-size: 14px; }
+.cellule-nom strong { display: block; font-size: 14.5px; }
+.cellule-nom small { color: var(--texte-doux); font-size: 12.5px; }
+
+.actions-ligne { display: flex; gap: 7px; flex-wrap: wrap; }
+
+/* --- Onglets -------------------------------------------------- */
+.onglets { display: flex; gap: 5px; flex-wrap: wrap; }
+.onglet {
+  padding: 8px 15px; border-radius: 9px; border: 1px solid var(--bord);
+  background: #fff; font-size: 13.5px; font-weight: 600; font-family: inherit;
+  cursor: pointer; color: var(--texte-doux); transition: all .18s;
+}
+.onglet:hover { border-color: var(--vert); color: var(--vert); }
+.onglet.actif { background: var(--vert); color: #fff; border-color: var(--vert); }
+.onglet .compteur {
+  display: inline-block; margin-left: 6px; padding: 1px 7px;
+  background: rgba(0,0,0,.09); border-radius: 999px; font-size: 11.5px;
+}
+.onglet.actif .compteur { background: rgba(255,255,255,.24); }
+
+/* --- Connexion ------------------------------------------------ */
+.page-connexion {
+  min-height: 100vh; display: grid; place-items: center; padding: 24px;
+  background: linear-gradient(150deg, var(--vert-fonce), var(--vert));
+}
+.carte-connexion {
+  background: #fff; border-radius: 18px; padding: 38px 34px;
+  width: 100%; max-width: 400px; box-shadow: 0 22px 60px rgba(0,0,0,.28);
+}
+.carte-connexion .marque { justify-content: center; margin: 0 0 8px; }
+.carte-connexion h1 { text-align: center; font-size: 21px; margin: 0 0 6px; }
+.carte-connexion .sous { text-align: center; color: var(--texte-doux); font-size: 14px; margin: 0 0 26px; }
+
+/* ============================================================
+   PIED DE PAGE
+   ============================================================ */
+.pied { background: var(--vert-fonce); color: rgba(255,255,255,.72); padding: 52px 0 26px; }
+.pied-grille { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; margin-bottom: 34px; }
+.pied h4 { color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 15px; }
+.pied p { margin: 0 0 10px; font-size: 14.5px; }
+.pied ul { list-style: none; padding: 0; margin: 0; }
+.pied li { margin-bottom: 9px; font-size: 14.5px; }
+.pied a { text-decoration: none; transition: color .18s; }
+.pied a:hover { color: var(--or); }
+.pied .marque-texte strong { color: #fff; }
+.pied .marque-texte span { color: rgba(255,255,255,.5); }
+.pied-bas {
+  border-top: 1px solid rgba(255,255,255,.13); padding-top: 22px;
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between;
+  font-size: 13px; color: rgba(255,255,255,.5);
+}
+
+/* --- Bouton WhatsApp flottant -------------------------------- */
+.flottant-wa {
+  position: fixed; right: 18px; bottom: 18px; z-index: 90;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25d366; color: #fff; display: grid; place-items: center;
+  font-size: 27px; text-decoration: none;
+  box-shadow: 0 6px 22px rgba(37,211,102,.44);
+  transition: transform .2s;
+}
+.flottant-wa:hover { transform: scale(1.09); }
+
+/* ============================================================
+   ANIMATIONS (sobres — priorité au mobile et aux petits forfaits)
+   ------------------------------------------------------------
+   Le contenu est VISIBLE par défaut. On ne le cache que si le
+   JavaScript est bien vivant (il pose .js-anime sur <html>).
+   Sans cette règle, un JS lent ou en échec laisserait des
+   sections entièrement blanches chez le client.
+   ============================================================ */
+.js-anime .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); }
+.js-anime .reveal.dedans { opacity: 1; transform: none; }
+.reveal:nth-child(2) { transition-delay: .07s; }
+.reveal:nth-child(3) { transition-delay: .14s; }
+.reveal:nth-child(4) { transition-delay: .21s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .heros-int { grid-template-columns: 1fr; gap: 36px; }
+  .pied-grille { grid-template-columns: 1fr 1fr; gap: 30px; }
+  .bloc-dossier { grid-template-columns: 1fr; gap: 28px; }
+  .photo-dossier { order: -1; }   /* la photo d'abord sur mobile */
+}
+
+@media (max-width: 700px) {
+  .nav-bascule { display: grid; place-items: center; }
+  .nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    background: #fff; border-bottom: 1px solid var(--bord);
+    padding: 10px 16px 16px; box-shadow: var(--ombre);
+  }
+  .nav.ouvert { display: flex; }
+  .nav a { padding: 12px 14px; }
+  .nav .btn { margin-top: 6px; }
+  .duo { grid-template-columns: 1fr; }
+  .heros-chiffres { gap: 22px; }
+  .chiffre strong { font-size: 24px; }
+  .pied-grille { grid-template-columns: 1fr; }
+  .grille-chauffeurs { grid-template-columns: 1fr; }
+  .barre-filtres { flex-direction: column; align-items: stretch; }
+  .admin-nav { width: 100%; margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* --- Impression ---------------------------------------------- */
+@media print {
+  .entete, .pied, .flottant-wa, .bandeau-demo, .chauffeur-actions, .barre-filtres { display: none !important; }
+  body { background: #fff; }
+  .carte-chauffeur { break-inside: avoid; border: 1px solid #999; }
+}

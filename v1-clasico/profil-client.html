@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon Profil Client — Bogna Ni Karama</title>
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <nav class="nav" id="nav-principale">
+      <a href="chauffeurs.html">Rechercher une moto</a>
+      <a href="profil-client.html" class="actif">Mon Profil</a>
+      <a href="index.html" style="color:var(--rouge);">Déconnexion</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="conteneur dashboard-grid">
+    
+    <!-- Sidebar -->
+    <aside class="perfil-sidebar">
+      <div class="perfil-avatar" id="avatarClient">U</div>
+      <h3 id="nomClient">Client Bamako</h3>
+      <p id="telClient">70 00 00 00</p>
+      
+      <div style="border-top: 1px solid var(--bord); padding-top: 20px; margin-top: 20px;">
+        <span class="section-oeil" style="font-size: 11px;">Mon Quartier par défaut</span>
+        <strong style="display:block; font-size: 18px; margin-top: 4px;" id="zoneClient">Hamdallaye</strong>
+      </div>
+      
+      <button class="btn btn-contour" style="margin-top: 20px;" onclick="openModal('modalEdit')">Modifier mon profil</button>
+    </aside>
+
+    <!-- Contenu Principal -->
+    <div class="dashboard-contenido">
+      
+      <div class="tarjeta-dash">
+        <h4><span aria-hidden="true">🚀</span> Accès Rapide</h4>
+        <a href="#" class="action-card" onclick="event.preventDefault(); openModal('modalCommander')">
+          <div class="action-card-info">
+            <strong>Commander une moto maintenant</strong>
+            <span>Trouvez un chauffeur disponible dans votre quartier</span>
+          </div>
+          <span aria-hidden="true" style="font-size: 24px;">➡️</span>
+        </a>
+        <a href="#" class="action-card" style="background: linear-gradient(135deg, #fffaf0, #fef4dd); border-color: #f7e0b5;" onclick="event.preventDefault(); openModal('modalFavoris')">
+          <div class="action-card-info">
+            <strong style="color: #96690a;">Mes Chauffeurs Favoris (2)</strong>
+            <span>Appelez directement vos conducteurs de confiance</span>
+          </div>
+          <span aria-hidden="true" style="font-size: 24px;">⭐</span>
+        </a>
+      </div>
+
+      <div class="tarjeta-dash">
+        <h4><span aria-hidden="true">📅</span> Mon Historique de Trajets</h4>
+        <ul class="lista-historial">
+          <li>
+            <div>
+              <div class="historial-ruta">Hamdallaye ➔ Grand Marché</div>
+              <div class="historial-fecha">Il y a 2 jours · Chauffeur: Moussa T.</div>
+            </div>
+            <div class="historial-precio">1000 F</div>
+          </li>
+          <li>
+            <div>
+              <div class="historial-ruta">Hamdallaye ➔ ACI 2000</div>
+              <div class="historial-fecha">Il y a 5 jours · Chauffeur: Oumar D.</div>
+            </div>
+            <div class="historial-precio">500 F</div>
+          </li>
+          <li>
+            <div>
+              <div class="historial-ruta">ACI 2000 ➔ Kalaban Coro</div>
+              <div class="historial-fecha">Il y a une semaine · Chauffeur: Seydou K.</div>
+            </div>
+            <div class="historial-precio">1500 F</div>
+          </li>
+        </ul>
+        <button class="btn btn-contour btn-petit" style="margin-top: 16px;">Voir tout l'historique</button>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Modales -->
+
+<!-- 1. Modal: Pedir Moto -->
+<div id="modalCommander" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modalCommander')">×</button>
+    <div class="modal-header" id="commanderHeader">
+      <h3>Commander une moto</h3>
+      <p>Trouvez un chauffeur rapidement.</p>
+    </div>
+    <div class="modal-body" id="commanderBody">
+      <div class="champ">
+        <label>Point de départ (Votre quartier)</label>
+        <input type="text" id="cmdDepart" value="" disabled>
+      </div>
+      <div class="champ">
+        <label>Destination</label>
+        <select id="cmdDest">
+          <option value="">Choisissez une destination...</option>
+          <option value="Grand Marché">Grand Marché</option>
+          <option value="Baco Djicoroni">Baco Djicoroni</option>
+          <option value="Kalaban Coro">Kalaban Coro</option>
+          <option value="ACI 2000">ACI 2000</option>
+        </select>
+      </div>
+      <div id="prixEstime" style="display:none; padding: 10px; background: #eef2ec; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+        <span style="display:block; font-size:12px; color:var(--texte-doux);">Prix estimé</span>
+        <strong style="font-size:20px; color:var(--vert);" id="prixTxt">-- F</strong>
+      </div>
+      <button class="btn btn-principal" style="width:100%;" id="btnConfirmerCmd">Confirmer la commande</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Modal: Favoritos -->
+<div id="modalFavoris" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modalFavoris')">×</button>
+    <div class="modal-header">
+      <h3>Mes Chauffeurs Favoris</h3>
+      <p>Accès direct à vos chauffeurs de confiance.</p>
+    </div>
+    <div class="modal-body">
+      
+      <div class="favori-item">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="perfil-avatar" style="width:40px; height:40px; font-size:16px; margin:0;">M</div>
+          <div class="favori-item-info">
+            <strong>Moussa T.</strong>
+            <span>Djakarta 125 · 5.0 ⭐</span>
+          </div>
+        </div>
+        <button class="btn btn-principal btn-petit" onclick="alert('Appel en cours...')">📞</button>
+      </div>
+
+      <div class="favori-item">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div class="perfil-avatar" style="width:40px; height:40px; font-size:16px; margin:0;">O</div>
+          <div class="favori-item-info">
+            <strong>Oumar D.</strong>
+            <span>Moto SANILI · 4.8 ⭐</span>
+          </div>
+        </div>
+        <button class="btn btn-principal btn-petit" onclick="alert('Appel en cours...')">📞</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 3. Modal: Editar Perfil -->
+<div id="modalEdit" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modalEdit')">×</button>
+    <div class="modal-header">
+      <h3>Modifier mon profil</h3>
+      <p>Mettez à jour vos informations.</p>
+    </div>
+    <div class="modal-body">
+      <div class="champ">
+        <label>Nom complet</label>
+        <input type="text" id="editNom">
+      </div>
+      <div class="champ">
+        <label>Téléphone</label>
+        <input type="tel" id="editTel">
+      </div>
+      <div class="champ">
+        <label>Quartier par défaut</label>
+        <input type="text" id="editZone">
+      </div>
+      <button class="btn btn-principal" style="width:100%;" onclick="sauvegarderProfil()">Enregistrer les modifications</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simular la carga de datos del registro
+  const urlParams = new URLSearchParams(window.location.search);
+  const nom = urlParams.get('nom') || 'Ami Traoré';
+  const tel = urlParams.get('tel') || '76 54 32 10';
+  const zone = urlParams.get('zone') || 'ACI 2000';
+  
+  document.getElementById('nomClient').textContent = nom;
+  document.getElementById('avatarClient').textContent = nom.charAt(0).toUpperCase();
+  document.getElementById('telClient').textContent = tel;
+  document.getElementById('zoneClient').textContent = zone;
+  
+  // Rellenar datos en los modales
+  document.getElementById('cmdDepart').value = zone;
+  document.getElementById('editNom').value = nom;
+  document.getElementById('editTel').value = tel;
+  document.getElementById('editZone').value = zone;
+
+  // Lógica de Modales
+  function openModal(id) {
+    document.getElementById(id).classList.add('activo');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('activo');
+  }
+
+  // Lógica de Pedir Moto
+  const cmdDest = document.getElementById('cmdDest');
+  const prixEstime = document.getElementById('prixEstime');
+  const prixTxt = document.getElementById('prixTxt');
+  
+  cmdDest.addEventListener('change', (e) => {
+    if(e.target.value) {
+      prixEstime.style.display = 'block';
+      // Precio aleatorio falso
+      const prix = Math.floor(Math.random() * 3 + 1) * 500;
+      prixTxt.textContent = prix + ' F';
+    } else {
+      prixEstime.style.display = 'none';
+    }
+  });
+
+  document.getElementById('btnConfirmerCmd').addEventListener('click', () => {
+    if(!cmdDest.value) return alert('Choisissez une destination.');
+    const body = document.getElementById('commanderBody');
+    const header = document.getElementById('commanderHeader');
+    
+    // Estado de carga
+    header.innerHTML = `<h3>Recherche en cours...</h3><p>Trouver un chauffeur près de ${document.getElementById('cmdDepart').value}</p>`;
+    body.innerHTML = `<div class="simulador-loader"><div class="spinner"></div><p>Contact des chauffeurs...</p></div>`;
+    
+    // Simular éxito después de 2.5s
+    setTimeout(() => {
+      header.innerHTML = `<h3 style="color:var(--vert);">Moto trouvée !</h3><p>Le chauffeur est en route.</p>`;
+      body.innerHTML = `
+        <div class="favori-item" style="background:#eef2ec; border:1px solid var(--vert);">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="perfil-avatar" style="width:50px; height:50px; margin:0;">M</div>
+            <div class="favori-item-info">
+              <strong style="color:var(--vert); font-size:18px;">Moussa Traoré</strong>
+              <span>Djakarta 125 · Arrive dans 3 min</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-principal" style="width:100%; margin-top:15px;" onclick="closeModal('modalCommander')">Fermer</button>
+      `;
+    }, 2500);
+  });
+
+  // Lógica Guardar Perfil
+  function sauvegarderProfil() {
+    const nouveauNom = document.getElementById('editNom').value;
+    const nouveauTel = document.getElementById('editTel').value;
+    const nouvelleZone = document.getElementById('editZone').value;
+    
+    document.getElementById('nomClient').textContent = nouveauNom;
+    document.getElementById('avatarClient').textContent = nouveauNom.charAt(0).toUpperCase();
+    document.getElementById('telClient').textContent = nouveauTel;
+    document.getElementById('zoneClient').textContent = nouvelleZone;
+    document.getElementById('cmdDepart').value = nouvelleZone;
+    
+    closeModal('modalEdit');
+  }
+</script>
+
+</body>
+</html>

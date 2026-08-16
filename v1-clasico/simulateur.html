@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulateur — Bogna Ni Karama</title>
+<meta name="description" content="Simulez un cycle complet : le client commande, le chauffeur accepte, la course se déroule, l'admin gère la flotte.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/estilos.css">
+<link rel="stylesheet" href="assets/simulateur.css">
+</head>
+<body>
+
+<div class="bandeau-demo">
+  ⚠️ SIMULATEUR — tout se passe dans cette page. Rien n'est envoyé, rien n'est gardé.
+</div>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <button class="nav-bascule" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-principale">☰</button>
+    <nav class="nav" id="nav-principale">
+      <a href="index.html">Accueil</a>
+      <a href="chauffeurs.html">Nos chauffeurs</a>
+      <a href="offres.html">Nos formules</a>
+      <a href="simulateur.html" class="actif">Simulateur</a>
+      <a class="btn btn-principal btn-petit" href="presentation.html">Présentation</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+<section class="sim-entete">
+  <div class="conteneur">
+    <span class="sim-oeil">Démonstration interactive</span>
+    <h1>Une course, du premier clic<br>jusqu'au <em>paiement</em></h1>
+    <p>
+      Les trois écrans ci-dessous sont trois téléphones différents : celui de
+      votre cliente, celui de votre chauffeur, et le vôtre. Ici ils sont côte à
+      côte pour que vous voyiez tout en même temps.
+    </p>
+
+    <div class="sim-outils">
+      <button class="btn btn-or" id="btn-scenario">▶ Jouer le scénario complet</button>
+      <button class="btn btn-blanc" id="btn-reinit">Tout remettre à zéro</button>
+      <span class="info" id="info-scenario">Ou pilotez vous-même, écran par écran</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0; margin-top:-18px;">
+  <div class="conteneur">
+
+    <!-- ===================== LES TROIS ÉCRANS ===================== -->
+    <div class="sim-scene">
+
+      <!-- ---------- CLIENTE ---------- -->
+      <article class="tel tel--client">
+        <div class="tel-tete">
+          <div class="tel-icone" aria-hidden="true">🧕</div>
+          <div>
+            <strong>Votre cliente</strong>
+            <span>Application client</span>
+          </div>
+        </div>
+        <div class="tel-corps" id="ecran-client"></div>
+      </article>
+
+      <!-- ---------- CHAUFFEUR ---------- -->
+      <article class="tel tel--chauffeur">
+        <div class="tel-tete">
+          <div class="tel-icone" aria-hidden="true">🛵</div>
+          <div>
+            <strong id="nom-chauffeur">Votre chauffeur</strong>
+            <span>Application chauffeur</span>
+          </div>
+        </div>
+        <div class="tel-corps" id="ecran-chauffeur"></div>
+      </article>
+
+      <!-- ---------- ADMIN ---------- -->
+      <article class="tel tel--admin">
+        <div class="tel-tete">
+          <div class="tel-icone" aria-hidden="true">📊</div>
+          <div>
+            <strong>Vous</strong>
+            <span>Panneau de gestion</span>
+          </div>
+        </div>
+        <div class="tel-corps" id="ecran-admin"></div>
+      </article>
+
+    </div>
+
+    <!-- ===================== JOURNAL ===================== -->
+    <div class="sim-journal">
+      <div class="sim-journal-tete">
+        <h2>Ce qui se passe, en direct</h2>
+        <span class="compte" id="compte-journal"></span>
+      </div>
+      <div class="sim-journal-liste" id="journal"></div>
+    </div>
+
+    <!-- ===================== GUIDE ===================== -->
+    <div class="sim-guide">
+      <h3>💡 Comment essayer</h3>
+      <ol>
+        <li>Sur l'écran de <strong>la cliente</strong>, choisissez un départ et une arrivée, puis demandez une moto.</li>
+        <li>Sur l'écran du <strong>chauffeur</strong>, la demande arrive : acceptez-la.</li>
+        <li>Faites avancer la course : en route, puis à bord, puis terminée.</li>
+        <li>La cliente peut alors noter le chauffeur.</li>
+        <li>Sur <strong>votre écran</strong>, inscrivez un nouveau chauffeur et validez-le.</li>
+      </ol>
+    </div>
+
+    <div class="alerte alerte-info" style="margin-top:24px;">
+      <span class="alerte-icone" aria-hidden="true">ℹ️</span>
+      <div>
+        <strong>Ce que montre ce simulateur</strong>
+        Le fonctionnement complet de la formule Plateforme et de la formule
+        Complète : réservation en ligne, acceptation par le chauffeur, suivi de
+        la course, notation et gestion des inscriptions. En production, chaque
+        acteur est sur son propre téléphone et tout passe par la base de données.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <div class="marque" style="margin-bottom:14px;">
+          <div class="marque-logo" aria-hidden="true">🛵</div>
+          <div class="marque-texte">
+            <strong>Bogna Ni Karama</strong>
+            <span>Moto Taxi · Bamako</span>
+          </div>
+        </div>
+        <p>Le service de moto taxi de Bamako. Lancement officiel le 8 août 2026, en partenariat avec Sunna TV Savana.</p>
+      </div>
+      <div>
+        <h4>La proposition</h4>
+        <ul>
+          <li><a href="presentation.html">Présentation complète</a></li>
+          <li><a href="offres.html">Nos formules</a></li>
+          <li><a href="simulateur.html">Simulateur</a></li>
+          <li><a href="index.html">Voir la plateforme</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Me joindre</h4>
+        <ul>
+          <li><strong>Lucman</strong></li>
+          <li><a href="https://wa.me/33766768087" target="_blank" rel="noopener">WhatsApp : +33 7 66 76 80 87</a></li>
+          <li style="opacity:.7; font-size:13px;">WhatsApp uniquement</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© <span data-annee></span> Bogna Ni Karama. Tous droits réservés.</span>
+      <span>Proposition préparée par Lucman</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/simulateur.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const ZONES = BNK.ZONES;
+
+  /* Le chauffeur qui pilote la démonstration : un des chauffeurs validés. */
+  const CHAUFFEUR = BNK.listerChauffeurs({ statut: 'valide' })[0] || {
+    nom: 'Moussa Traoré', zone: 'Badalabougou', moto: 'Djakarta 125',
+  };
+  document.getElementById('nom-chauffeur').textContent = CHAUFFEUR.nom;
+
+  const fcfa = (n) => n.toLocaleString('fr-FR') + ' FCFA';
+
+  /* ============================================================
+     ÉCRAN DE LA CLIENTE
+     ============================================================ */
+  function dessinerClient() {
+    const active = SIM.courses(['demandee', 'acceptee', 'en_route', 'a_bord'])[0];
+    const aNoter = SIM.courses(['terminee']).find(c => !c.note);
+    const zone = document.getElementById('ecran-client');
+
+    // Une course est en cours : on la suit.
+    if (active) {
+      const et = SIM.ETATS[active.etat];
+      // Le chauffeur n'existe qu'à partir de « acceptée » : on ne lit son nom
+      // que dans les états où il est réellement assigné.
+      const nomCh = active.chauffeur ? active.chauffeur.nom : '';
+      const messages = {
+        demandee: 'Nous cherchons un chauffeur près de vous…',
+        acceptee: `${nomCh} a accepté votre course`,
+        en_route: `${nomCh} arrive vers vous`,
+        a_bord:   'Vous êtes en route vers votre destination',
+      };
+      zone.innerHTML = `
+        <div class="sim-course sim-course--vif">
+          <div class="sim-course-tete">
+            <strong>Course n° ${active.id}</strong>
+            <span class="etiquette et-${et.couleur}">${echapper(et.libelle)}</span>
+          </div>
+          <p class="sim-trajet">
+            ${echapper(active.depart)} <span class="fleche">→</span> ${echapper(active.arrivee)}
+          </p>
+          <div class="sim-detail">
+            <span><strong>${fcfa(active.prix)}</strong></span>
+            <span>${active.km} km</span>
+            <span>~${active.minutes} min</span>
+          </div>
+          <p style="margin:0 0 10px; font-size:14px;">${echapper(messages[active.etat])}</p>
+          ${active.chauffeur ? `
+            <div class="ruban-dossier" style="margin:0 0 10px;">
+              <span aria-hidden="true">🛡️</span> ${echapper(active.chauffeur.moto)} · dossier de séparation
+            </div>` : ''}
+          ${active.etat === 'demandee' ? `
+            <div class="sim-actions">
+              <button class="btn btn-danger btn-petit" data-sim="annuler" data-id="${active.id}">Annuler</button>
+            </div>` : ''}
+        </div>`;
+      return;
+    }
+
+    // Une course vient de finir : on propose de noter.
+    if (aNoter) {
+      zone.innerHTML = `
+        <div class="sim-course">
+          <div class="sim-course-tete">
+            <strong>Course terminée</strong>
+            <span class="etiquette et-valide">Arrivée</span>
+          </div>
+          <p class="sim-trajet">
+            ${echapper(aNoter.depart)} <span class="fleche">→</span> ${echapper(aNoter.arrivee)}
+          </p>
+          <div class="sim-detail">
+            <span><strong>${fcfa(aNoter.prix)}</strong> payés</span>
+            <span>${echapper(aNoter.chauffeur.nom)}</span>
+          </div>
+          <p style="margin:0 0 8px; font-size:14px; font-weight:600;">Comment s'est passé le trajet ?</p>
+          <div class="sim-notes">
+            ${[1,2,3,4,5].map(n =>
+              `<button class="sim-etoile" data-sim="noter" data-id="${aNoter.id}" data-note="${n}"
+                       aria-label="${n} étoiles">★</button>`).join('')}
+          </div>
+        </div>`;
+      return;
+    }
+
+    // Sinon : formulaire de demande.
+    zone.innerHTML = `
+      <div class="sim-champ">
+        <label for="sim-nom">Votre nom</label>
+        <input type="text" id="sim-nom" value="Awa Diallo">
+      </div>
+      <div class="sim-duo">
+        <div class="sim-champ">
+          <label for="sim-depart">Départ</label>
+          <select id="sim-depart">
+            ${ZONES.map((z, i) => `<option ${i === 1 ? 'selected' : ''}>${echapper(z)}</option>`).join('')}
+          </select>
+        </div>
+        <div class="sim-champ">
+          <label for="sim-arrivee">Arrivée</label>
+          <select id="sim-arrivee">
+            ${ZONES.map((z, i) => `<option ${i === 4 ? 'selected' : ''}>${echapper(z)}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <p id="sim-estimation" style="font-size:13.5px; color:var(--texte-doux); margin:0 0 10px;"></p>
+      <button class="btn btn-principal btn-large" data-sim="demander">Demander une moto</button>
+      <p style="font-size:12.5px; color:var(--texte-doux); margin:10px 0 0;">
+        Toutes nos motos ont le dossier de séparation.
+      </p>`;
+
+    majEstimation();
+  }
+
+  /** Affiche le prix estimé sous les deux listes. */
+  function majEstimation() {
+    const d = document.getElementById('sim-depart');
+    const a = document.getElementById('sim-arrivee');
+    const p = document.getElementById('sim-estimation');
+    if (!d || !a || !p) return;
+    if (d.value === a.value) {
+      p.textContent = 'Choisissez deux quartiers différents.';
+      return;
+    }
+    const e = SIM.estimer(d.value, a.value);
+    p.innerHTML = `Estimation : <strong>${fcfa(e.prix)}</strong> · ${e.km} km · environ ${e.minutes} min`;
+  }
+
+  /* ============================================================
+     ÉCRAN DU CHAUFFEUR
+     ============================================================ */
+  function dessinerChauffeur() {
+    const zone = document.getElementById('ecran-chauffeur');
+    const demande = SIM.courses(['demandee'])[0];
+    const enCours = SIM.courses(['acceptee', 'en_route', 'a_bord'])[0];
+
+    if (demande) {
+      zone.innerHTML = `
+        <div class="sim-course sim-course--vif">
+          <div class="sim-course-tete">
+            <strong>Nouvelle demande</strong>
+            <span class="etiquette et-attente">À accepter</span>
+          </div>
+          <p class="sim-trajet">
+            ${echapper(demande.depart)} <span class="fleche">→</span> ${echapper(demande.arrivee)}
+          </p>
+          <div class="sim-detail">
+            <span><strong>${fcfa(demande.prix)}</strong></span>
+            <span>${demande.km} km</span>
+            <span>${echapper(demande.nomClient)}</span>
+          </div>
+          <div class="sim-actions">
+            <button class="btn btn-principal btn-petit" data-sim="accepter" data-id="${demande.id}">Accepter</button>
+            <button class="btn btn-contour btn-petit" data-sim="refuser" data-id="${demande.id}">Refuser</button>
+          </div>
+        </div>`;
+      return;
+    }
+
+    if (enCours) {
+      const et = SIM.ETATS[enCours.etat];
+      const bouton = {
+        acceptee: 'Je pars vers la cliente',
+        en_route: 'La cliente est montée',
+        a_bord:   'Course terminée',
+      }[enCours.etat];
+      zone.innerHTML = `
+        <div class="sim-course sim-course--vif">
+          <div class="sim-course-tete">
+            <strong>Course n° ${enCours.id}</strong>
+            <span class="etiquette et-${et.couleur}">${echapper(et.libelle)}</span>
+          </div>
+          <p class="sim-trajet">
+            ${echapper(enCours.depart)} <span class="fleche">→</span> ${echapper(enCours.arrivee)}
+          </p>
+          <div class="sim-detail">
+            <span><strong>${fcfa(enCours.prix)}</strong></span>
+            <span>${echapper(enCours.nomClient)}</span>
+          </div>
+          <button class="btn btn-principal btn-large" data-sim="avancer" data-id="${enCours.id}">
+            ${echapper(bouton)}
+          </button>
+        </div>`;
+      return;
+    }
+
+    const faites = SIM.courses(['terminee']);
+    const gains = faites.reduce((s, c) => s + c.prix, 0);
+    zone.innerHTML = `
+      <div class="sim-vide">
+        <span class="ico" aria-hidden="true">📭</span>
+        Aucune demande pour le moment.<br>
+        Vous êtes disponible dans ${echapper(CHAUFFEUR.zone)}.
+      </div>
+      ${faites.length ? `
+        <div class="sim-chiffres">
+          <div class="sim-chiffre"><span>Courses du jour</span><strong>${faites.length}</strong></div>
+          <div class="sim-chiffre"><span>Gains du jour</span><strong>${gains.toLocaleString('fr-FR')}</strong></div>
+        </div>` : ''}`;
+  }
+
+  /* ============================================================
+     ÉCRAN DE L'ADMIN
+     ============================================================ */
+  function dessinerAdmin() {
+    const c = SIM.chiffres();
+    const toutes = SIM.inscriptions();
+    const enCours = toutes.filter(i => i.etat === 'en_cours');
+    const aTraiter = toutes.filter(i => ['en_attente', 'equipement'].includes(i.etat));
+
+    document.getElementById('ecran-admin').innerHTML = `
+      <div class="sim-chiffres">
+        <div class="sim-chiffre"><span>Demandes</span><strong>${c.demandees}</strong></div>
+        <div class="sim-chiffre"><span>En course</span><strong>${c.enCours}</strong></div>
+        <div class="sim-chiffre"><span>Terminées</span><strong>${c.terminees}</strong></div>
+        <div class="sim-chiffre sim-chiffre--or"><span>Revenus</span><strong>${c.revenus.toLocaleString('fr-FR')}</strong></div>
+      </div>
+
+      ${enCours.length ? `
+        <div>
+          <p class="sim-titre-liste">Inscriptions en cours</p>
+          ${enCours.map(i => dessinerCandidature(i)).join('')}
+        </div>` : ''}
+
+      ${aTraiter.length ? `
+        <div>
+          <p class="sim-titre-liste">Dossiers à vérifier</p>
+          ${aTraiter.map(i => `
+            <div class="sim-course" style="margin-bottom:8px;">
+              <div class="sim-course-tete">
+                <strong>${echapper(i.nom)}</strong>
+                <span class="etiquette et-${i.etat === 'equipement' ? 'equipement' : 'attente'}">
+                  ${i.etat === 'equipement' ? 'Moto à équiper' : 'À vérifier'}
+                </span>
+              </div>
+              <div class="sim-detail" style="border-top:none; padding-top:0; margin-bottom:8px;">
+                <span>${echapper(i.zone)}</span>
+                <span>${echapper(i.moto)}</span>
+              </div>
+              <p class="sim-pieces-ok">
+                <span aria-hidden="true">📄</span>
+                ${SIM.PIECES.filter(p => i.pieces[p.cle]).length} / ${SIM.PIECES.length} documents présentés
+              </p>
+              <div class="sim-actions">
+                ${i.etat === 'equipement'
+                  ? `<button class="btn btn-principal btn-petit" data-sim="equipee" data-id="${i.id}">Moto équipée</button>`
+                  : `<button class="btn btn-principal btn-petit" data-sim="valider" data-id="${i.id}">Valider</button>
+                     <button class="btn btn-danger btn-petit" data-sim="refuser-insc" data-id="${i.id}">Refuser</button>`}
+              </div>
+            </div>`).join('')}
+        </div>` : ''}
+
+      ${!enCours.length && !aTraiter.length ? `
+        <div class="sim-vide">
+          <span class="ico" aria-hidden="true">✅</span>
+          Aucune inscription en attente.
+        </div>` : ''}
+
+      <div style="margin-top:auto; padding-top:12px; border-top:1px solid var(--bord);">
+        <p style="font-size:12.5px; color:var(--texte-doux); margin:0 0 8px;">
+          Un chauffeur commence son inscription :
+        </p>
+        <div class="sim-actions">
+          <button class="btn btn-contour btn-petit" data-sim="inscrire" data-dossier="1">Moto équipée</button>
+          <button class="btn btn-contour btn-petit" data-sim="inscrire" data-dossier="0">Sans dossier</button>
+        </div>
+      </div>`;
+  }
+
+  /** Une candidature en cours : on voit où elle en est dans le parcours. */
+  function dessinerCandidature(i) {
+    const etapes = SIM.ETAPES_INSCRIPTION;
+    const etape = etapes[i.etape];
+    const surDocuments = etape.cle === 'documents';
+    const fournies = SIM.PIECES.filter(p => i.pieces[p.cle]).length;
+
+    return `
+      <div class="sim-course sim-course--vif" style="margin-bottom:8px;">
+        <div class="sim-course-tete">
+          <strong>${echapper(i.nom)}</strong>
+          <span class="etiquette et-attente">Étape ${i.etape + 1}/${etapes.length}</span>
+        </div>
+
+        <div class="sim-jalons" aria-hidden="true">
+          ${etapes.map((e, n) => `
+            <span class="sim-jalon ${n < i.etape ? 'fait' : ''} ${n === i.etape ? 'actif' : ''}"
+                  title="${echapper(e.nom)}">${n < i.etape ? '✓' : n + 1}</span>`).join('')}
+        </div>
+
+        <p class="sim-etape-nom">${echapper(etape.nom)}</p>
+        <p class="sim-etape-detail">${echapper(etape.detail)}</p>
+
+        ${surDocuments ? `
+          <div class="sim-pieces">
+            ${SIM.PIECES.map(p => `
+              <button class="sim-piece ${i.pieces[p.cle] ? 'ok' : ''}"
+                      data-sim="piece" data-id="${i.id}" data-piece="${p.cle}">
+                ${i.pieces[p.cle] ? '✓' : '○'} ${echapper(p.nom)}
+              </button>`).join('')}
+          </div>
+          ${fournies < SIM.PIECES.length ? `
+            <p class="sim-alerte-piece">
+              ${SIM.PIECES.length - fournies} document(s) manquant(s) — il ne peut pas continuer
+            </p>` : ''}
+          <div class="sim-actions">
+            ${fournies < SIM.PIECES.length
+              ? `<button class="btn btn-contour btn-petit" data-sim="toutes-pieces" data-id="${i.id}">Il présente tout</button>`
+              : ''}
+            <button class="btn btn-principal btn-petit" data-sim="avancer-insc" data-id="${i.id}">Continuer</button>
+          </div>`
+        : `
+          <div class="sim-actions">
+            <button class="btn btn-principal btn-petit" data-sim="avancer-insc" data-id="${i.id}">
+              ${i.etape === etapes.length - 1 ? 'Déposer le dossier' : 'Continuer'}
+            </button>
+          </div>`}
+      </div>`;
+  }
+
+  /* ============================================================
+     JOURNAL
+     ============================================================ */
+  function dessinerJournal() {
+    const lignes = SIM.journal();
+    document.getElementById('compte-journal').textContent =
+      lignes.length ? `${lignes.length} évènement${lignes.length > 1 ? 's' : ''}` : '';
+
+    document.getElementById('journal').innerHTML = lignes.length
+      ? lignes.map(l => `
+          <div class="sim-ligne">
+            <span class="h">${echapper(l.heure)}</span>
+            <span class="qui qui-${l.acteur}">${echapper(l.acteur)}</span>
+            <span>${echapper(l.texte)}</span>
+          </div>`).join('')
+      : `<div class="sim-vide" style="border:none; margin:12px;">
+           <span class="ico" aria-hidden="true">📝</span>
+           Rien pour l'instant. Demandez une moto pour commencer.
+         </div>`;
+  }
+
+  function toutDessiner() {
+    dessinerClient();
+    dessinerChauffeur();
+    dessinerAdmin();
+    dessinerJournal();
+  }
+
+  SIM.abonner(toutDessiner);
+
+  /* ============================================================
+     Actions
+     ============================================================ */
+  const NOMS = ['Fatoumata Keïta', 'Aminata Sow', 'Kadidia Traoré', 'Mariam Coulibaly'];
+  const NOMS_CH = ['Bakary Sangaré', 'Modibo Diarra', 'Souleymane Touré', 'Amadou Cissé'];
+  const MOTOS = ['Djakarta 125', 'Sanili 110', 'Apsonic 125'];
+  const auHasard = (l) => l[Math.floor(Math.random() * l.length)];
+
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-sim]');
+    if (!b) return;
+    const { sim, id } = b.dataset;
+
+    switch (sim) {
+      case 'demander': {
+        const nom = document.getElementById('sim-nom').value.trim() || 'Cliente';
+        const dep = document.getElementById('sim-depart').value;
+        const arr = document.getElementById('sim-arrivee').value;
+        if (dep === arr) { majEstimation(); return; }
+        SIM.demanderCourse({ nomClient: nom, depart: dep, arrivee: arr });
+        break;
+      }
+      case 'annuler':  SIM.annulerCourse(id); break;
+      case 'accepter': SIM.accepterCourse(id, CHAUFFEUR); break;
+      case 'refuser':  SIM.refuserCourse(id, CHAUFFEUR); break;
+      case 'avancer':  SIM.avancerCourse(id); break;
+      case 'noter':    SIM.noterChauffeur(id, Number(b.dataset.note)); break;
+      case 'inscrire':
+        SIM.commencerInscription({
+          nom: auHasard(NOMS_CH),
+          zone: auHasard(BNK.ZONES),
+          moto: auHasard(MOTOS),
+          dossier: b.dataset.dossier === '1',
+        });
+        break;
+      case 'avancer-insc':  SIM.avancerInscription(id); break;
+      case 'piece':         SIM.basculerPiece(id, b.dataset.piece); break;
+      case 'toutes-pieces': SIM.fournirToutesPieces(id); break;
+      case 'valider':       SIM.traiterInscription(id, 'valider'); break;
+      case 'refuser-insc':  SIM.traiterInscription(id, 'refuser'); break;
+      case 'equipee':       SIM.traiterInscription(id, 'equipee'); break;
+    }
+  });
+
+  document.addEventListener('change', (e) => {
+    if (['sim-depart', 'sim-arrivee'].includes(e.target.id)) majEstimation();
+  });
+
+  /* --- Scénario automatique ------------------------------------ */
+  const btnScenario = document.getElementById('btn-scenario');
+  const info = document.getElementById('info-scenario');
+  let enCours = false;
+
+  const attendre = (ms) => new Promise(r => setTimeout(r, ms));
+
+  async function jouerScenario() {
+    if (enCours) return;
+    enCours = true;
+    btnScenario.disabled = true;
+    SIM.reinitialiser();
+
+    const etapes = [
+      ['La cliente demande une moto…', () => {
+        SIM.demanderCourse({
+          nomClient: auHasard(NOMS),
+          depart: BNK.ZONES[1],
+          arrivee: BNK.ZONES[4],
+        });
+      }],
+      ['Le chauffeur accepte…', () => {
+        const c = SIM.courses(['demandee'])[0];
+        if (c) SIM.accepterCourse(c.id, CHAUFFEUR);
+      }],
+      ['Le chauffeur part la chercher…', () => {
+        const c = SIM.courses(['acceptee'])[0];
+        if (c) SIM.avancerCourse(c.id);
+      }],
+      ['La cliente est montée…', () => {
+        const c = SIM.courses(['en_route'])[0];
+        if (c) SIM.avancerCourse(c.id);
+      }],
+      ['Arrivée à destination…', () => {
+        const c = SIM.courses(['a_bord'])[0];
+        if (c) SIM.avancerCourse(c.id);
+      }],
+      ['La cliente note le chauffeur…', () => {
+        const c = SIM.courses(['terminee'])[0];
+        if (c) SIM.noterChauffeur(c.id, 5);
+      }],
+      ['Un chauffeur commence son inscription…', () => {
+        SIM.commencerInscription({
+          nom: auHasard(NOMS_CH), zone: auHasard(BNK.ZONES),
+          moto: auHasard(MOTOS), dossier: false,
+        });
+      }],
+      ['Étape 1 : il donne son identité…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'en_cours');
+        if (i) SIM.avancerInscription(i.id);
+      }],
+      ['Étape 2 : il décrit sa moto…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'en_cours');
+        if (i) SIM.avancerInscription(i.id);
+      }],
+      ['Étape 3 : il présente ses quatre documents…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'en_cours');
+        if (i) SIM.fournirToutesPieces(i.id);
+      }],
+      ['Il passe à la dernière étape…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'en_cours');
+        if (i) SIM.avancerInscription(i.id);
+      }],
+      ['Étape 4 : il dépose son dossier…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'en_cours');
+        if (i) SIM.avancerInscription(i.id);
+      }],
+      ['Sa moto est équipée à l\'atelier…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'equipement');
+        if (i) SIM.traiterInscription(i.id, 'equipee');
+      }],
+      ['Vous vérifiez et validez sa fiche…', () => {
+        const i = SIM.inscriptions().find(x => x.etat === 'en_attente');
+        if (i) SIM.traiterInscription(i.id, 'valider');
+      }],
+    ];
+
+    for (const [texte, action] of etapes) {
+      info.textContent = texte;
+      action();
+      await attendre(1500);
+    }
+
+    info.textContent = 'Scénario terminé — tout s\'est passé sous vos yeux.';
+    btnScenario.disabled = false;
+    enCours = false;
+  }
+
+  btnScenario.addEventListener('click', jouerScenario);
+  document.getElementById('btn-reinit').addEventListener('click', () => {
+    if (enCours) return;
+    SIM.reinitialiser();
+    info.textContent = 'Ou pilotez vous-même, écran par écran';
+  });
+
+  toutDessiner();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devenir chauffeur — Bogna Ni Karama</title>
+<meta name="description" content="Rejoignez la flotte Bogna Ni Karama à Bamako. Quatre étapes, un dossier vérifié, et votre fiche est publiée.">
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<div class="bandeau-demo">
+  ⚠️ DÉMONSTRATION — les inscriptions restent dans ce navigateur et ne sont envoyées à personne.
+</div>
+
+<a class="saut-contenu" href="#contenu">Aller au contenu</a>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <button class="nav-bascule" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-principale">☰</button>
+    <nav class="nav" id="nav-principale">
+      <a href="index.html">Accueil</a>
+      <a href="chauffeurs.html">Nos chauffeurs</a>
+      <a href="offres.html">Nos formules</a>
+      <a href="simulateur.html">Simulateur</a>
+      <a href="inscription.html" class="actif">Devenir chauffeur</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu" class="section">
+  <div class="conteneur">
+
+    <div class="section-titre">
+      <span class="section-oeil">Rejoindre la flotte</span>
+      <h2>Devenez chauffeur Bogna Ni Karama</h2>
+      <p>
+        Quatre étapes, une vérification par nos équipes, et votre fiche est
+        publiée. Nous contrôlons chaque dossier : c'est ce qui fait la
+        réputation de notre flotte.
+      </p>
+    </div>
+
+    <!-- ===================== PARCOURS ===================== -->
+    <div class="parcours-inscription" id="parcours" aria-hidden="true">
+      <div class="jalon actif" data-jalon="1">
+        <span class="jalon-pastille">1</span>
+        <span class="jalon-nom">Votre identité</span>
+      </div>
+      <div class="jalon" data-jalon="2">
+        <span class="jalon-pastille">2</span>
+        <span class="jalon-nom">Votre moto</span>
+      </div>
+      <div class="jalon" data-jalon="3">
+        <span class="jalon-pastille">3</span>
+        <span class="jalon-nom">Vos documents</span>
+      </div>
+      <div class="jalon" data-jalon="4">
+        <span class="jalon-pastille">4</span>
+        <span class="jalon-nom">Vérification</span>
+      </div>
+    </div>
+
+    <!-- Message de confirmation (affiché après envoi) -->
+    <div class="carte-formulaire" id="bloc-succes" hidden>
+      <div style="text-align:center;">
+        <div style="font-size:54px; margin-bottom:12px;" aria-hidden="true">✅</div>
+        <h2 style="margin:0 0 10px; font-size:25px;">Dossier déposé</h2>
+        <p style="color:var(--texte-doux); font-size:16px; max-width:48ch; margin:0 auto 26px;"
+           id="succes-message"></p>
+        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+          <a class="btn btn-principal" href="index.html">Retour à l'accueil</a>
+          <button class="btn btn-contour" type="button" id="btn-autre">Inscrire un autre chauffeur</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== FORMULAIRE ===================== -->
+    <form class="carte-formulaire" id="formulaire" novalidate>
+
+      <!-- ---------- ÉTAPE 1 · IDENTITÉ ---------- -->
+      <section class="etape-form visible" data-etape="1">
+        <div class="etape-tete">
+          <span class="etape-compte">Étape 1 sur 4</span>
+          <h3>Qui êtes-vous ?</h3>
+          <p>Ces informations apparaîtront sur votre fiche, visible par les clients.</p>
+        </div>
+
+        <div class="groupe">
+          <label for="nom">Nom complet <span class="requis">*</span></label>
+          <input type="text" id="nom" name="nom" autocomplete="name" required
+                 placeholder="Ex : Moussa Traoré">
+          <span class="aide">Tel qu'il figure sur votre pièce d'identité</span>
+          <p class="erreur" id="err-nom"></p>
+        </div>
+
+        <div class="duo">
+          <div class="groupe">
+            <label for="tel">Téléphone <span class="requis">*</span></label>
+            <input type="tel" id="tel" name="tel" autocomplete="tel" required
+                   inputmode="numeric" placeholder="Ex : 76 12 34 56">
+            <span class="aide">8 chiffres, sans l'indicatif +223</span>
+            <p class="erreur" id="err-tel"></p>
+          </div>
+          <div class="groupe">
+            <label for="zone">Quartier habituel <span class="requis">*</span></label>
+            <select id="zone" name="zone" required>
+              <option value="">Choisissez un quartier</option>
+            </select>
+            <span class="aide">Là où vous travaillez le plus souvent</span>
+            <p class="erreur" id="err-zone"></p>
+          </div>
+        </div>
+
+        <div class="groupe">
+          <label for="experience">Années d'expérience à moto <span class="requis">*</span></label>
+          <input type="number" id="experience" name="experience" required min="0" max="50" placeholder="Ex : 5">
+          <span class="aide">L'expérience rassure les clients : elle est affichée sur votre fiche</span>
+          <p class="erreur" id="err-experience"></p>
+        </div>
+
+        <div class="etape-pieds">
+          <button class="btn btn-principal btn-suite" type="button" data-suivant="2">
+            Continuer
+          </button>
+        </div>
+      </section>
+
+      <!-- ---------- ÉTAPE 2 · LA MOTO ---------- -->
+      <section class="etape-form" data-etape="2">
+        <div class="etape-tete">
+          <span class="etape-compte">Étape 2 sur 4</span>
+          <h3>Votre moto</h3>
+          <p>Le client doit reconnaître la moto qui vient le chercher.</p>
+        </div>
+
+        <div class="duo">
+          <div class="groupe">
+            <label for="moto">Modèle <span class="requis">*</span></label>
+            <input type="text" id="moto" name="moto" required placeholder="Ex : Djakarta 125">
+            <p class="erreur" id="err-moto"></p>
+          </div>
+          <div class="groupe">
+            <label for="immat">Immatriculation <span class="requis">*</span></label>
+            <input type="text" id="immat" name="immat" required placeholder="Ex : BKO 4521 MC"
+                   style="text-transform:uppercase;">
+            <span class="aide">Vérifiée avant la mise en ligne</span>
+            <p class="erreur" id="err-immat"></p>
+          </div>
+        </div>
+
+        <div class="groupe">
+          <label class="bascule-dossier bascule-large" for="dossier">
+            <input type="checkbox" id="dossier" name="dossier">
+            <span>🛡️ Ma moto est équipée du dossier de séparation</span>
+          </label>
+          <span class="aide">
+            Toutes les motos de Bogna Ni Karama en sont équipées : c'est ce qui
+            permet au passager de voyager sans contact physique.
+          </span>
+
+          <!-- Affiché seulement si la case n'est pas cochée -->
+          <div class="alerte alerte-info" id="aide-atelier" style="margin-top:14px;" hidden>
+            <span class="alerte-icone" aria-hidden="true">🔧</span>
+            <div>
+              <strong>Pas encore de dossier ? Ce n'est pas un refus.</strong>
+              Nous vous mettons en relation avec notre atelier partenaire, qui
+              installe le dossier sur votre moto. Une fois équipée, votre fiche
+              est publiée et vous commencez à recevoir des courses.
+              Continuez votre inscription : nous vous rappelons pour organiser
+              l'installation.
+            </div>
+          </div>
+        </div>
+
+        <div class="groupe">
+          <label for="photo">Votre photo (facultatif)</label>
+          <input type="file" id="photo" name="photo" accept="image/*">
+          <span class="aide">Une photo de vous rassure les clients. Maximum 2 Mo.</span>
+          <p class="erreur" id="err-photo"></p>
+          <div id="apercu-photo" style="margin-top:12px;" hidden>
+            <img alt="Aperçu de votre photo" style="width:84px; height:84px; border-radius:50%; object-fit:cover;">
+          </div>
+        </div>
+
+        <div class="etape-pieds">
+          <button class="btn btn-contour" type="button" data-precedent="1">Retour</button>
+          <button class="btn btn-principal btn-suite" type="button" data-suivant="3">Continuer</button>
+        </div>
+      </section>
+
+      <!-- ---------- ÉTAPE 3 · DOCUMENTS ---------- -->
+      <section class="etape-form" data-etape="3">
+        <div class="etape-tete">
+          <span class="etape-compte">Étape 3 sur 4</span>
+          <h3>Les documents que nous vérifions</h3>
+          <p>
+            Cochez ce que vous pouvez présenter. Nos équipes les contrôlent avant
+            de publier votre fiche.
+          </p>
+        </div>
+
+        <label class="piece" for="doc-permis">
+          <input type="checkbox" id="doc-permis" data-piece>
+          <span class="piece-texte">
+            <strong>Permis de conduire valide <span class="piece-obligatoire">Obligatoire</span></strong>
+            <span>Catégorie moto, en cours de validité</span>
+          </span>
+        </label>
+
+        <label class="piece" for="doc-identite">
+          <input type="checkbox" id="doc-identite" data-piece>
+          <span class="piece-texte">
+            <strong>Pièce d'identité <span class="piece-obligatoire">Obligatoire</span></strong>
+            <span>Carte nationale, passeport ou carte consulaire</span>
+          </span>
+        </label>
+
+        <label class="piece" for="doc-carte-grise">
+          <input type="checkbox" id="doc-carte-grise" data-piece>
+          <span class="piece-texte">
+            <strong>Carte grise de la moto <span class="piece-obligatoire">Obligatoire</span></strong>
+            <span>Au même nom que la pièce d'identité, ou autorisation du propriétaire</span>
+          </span>
+        </label>
+
+        <label class="piece" for="doc-assurance">
+          <input type="checkbox" id="doc-assurance" data-piece>
+          <span class="piece-texte">
+            <strong>Assurance de la moto <span class="piece-obligatoire">Obligatoire</span></strong>
+            <span>Attestation en cours de validité</span>
+          </span>
+        </label>
+
+        <p class="erreur" id="err-pieces"></p>
+
+        <div class="alerte alerte-attention" style="margin-top:18px;">
+          <span class="alerte-icone" aria-hidden="true">📄</span>
+          <div>
+            <strong>Vous les présenterez lors de la vérification</strong>
+            Pas besoin de les envoyer maintenant. Nos équipes vous appellent pour
+            convenir d'un rendez-vous et les contrôler avec vous.
+          </div>
+        </div>
+
+        <div class="etape-pieds">
+          <button class="btn btn-contour" type="button" data-precedent="2">Retour</button>
+          <button class="btn btn-principal btn-suite" type="button" data-suivant="4">Continuer</button>
+        </div>
+      </section>
+
+      <!-- ---------- ÉTAPE 4 · VÉRIFICATION ---------- -->
+      <section class="etape-form" data-etape="4">
+        <div class="etape-tete">
+          <span class="etape-compte">Étape 4 sur 4</span>
+          <h3>Vérifiez votre dossier</h3>
+          <p>Relisez avant d'envoyer. Toute information fausse entraîne un refus définitif.</p>
+        </div>
+
+        <dl class="recap" id="recap"></dl>
+
+        <div class="alerte alerte-attention" style="margin-top:18px;">
+          <span class="alerte-icone" aria-hidden="true">🛡️</span>
+          <div>
+            <strong>Ce qui se passe ensuite</strong>
+            Votre fiche reste invisible tant que nos équipes n'ont pas vérifié
+            votre identité, votre moto et vos documents. Vous êtes rappelé sous
+            48 heures.
+          </div>
+        </div>
+
+        <label class="piece" for="engagement" style="margin-top:14px;">
+          <input type="checkbox" id="engagement">
+          <span class="piece-texte">
+            <strong>Je certifie que ces informations sont exactes</strong>
+            <span>Et je m'engage à respecter les règles de Bogna Ni Karama</span>
+          </span>
+        </label>
+        <p class="erreur" id="err-engagement"></p>
+
+        <div class="etape-pieds">
+          <button class="btn btn-contour" type="button" data-precedent="3">Retour</button>
+          <button class="btn btn-principal btn-suite" type="submit">Déposer mon dossier</button>
+        </div>
+      </section>
+
+    </form>
+
+  </div>
+</main>
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied-grille">
+      <div>
+        <div class="marque" style="margin-bottom:14px;">
+          <div class="marque-logo" aria-hidden="true">🛵</div>
+          <div class="marque-texte">
+            <strong>Bogna Ni Karama</strong>
+            <span>Moto Taxi · Bamako</span>
+          </div>
+        </div>
+        <p>Le service de moto taxi de Bamako. Lancement officiel le 8 août 2026, en partenariat avec Sunna TV Savana.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="chauffeurs.html">Nos chauffeurs</a></li>
+          <li><a href="inscription.html">Devenir chauffeur</a></li>
+          <li><a href="admin.html">Espace administration</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Nous joindre</h4>
+        <ul>
+          <li><a href="tel:+22371029158">71 02 91 58</a></li>
+          <li><a href="tel:+22371872774">71 87 27 74</a></li>
+          <li><a href="tel:+22371749813">71 74 98 13</a></li>
+          <li>Bamako, Mali</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <span>© <span data-annee></span> Bogna Ni Karama. Tous droits réservés.</span>
+      <span>Partenaire média : Sunna TV Savana</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const form   = document.getElementById('formulaire');
+  const succes = document.getElementById('bloc-succes');
+  const parcours = document.getElementById('parcours');
+  const selZone = document.getElementById('zone');
+
+  BNK.ZONES.forEach(z => {
+    const o = document.createElement('option');
+    o.value = z; o.textContent = z;
+    selZone.appendChild(o);
+  });
+
+  /* ============================================================
+     Navigation entre les étapes
+     ============================================================ */
+  let etapeCourante = 1;
+  const DERNIERE = 4;
+
+  function montrerEtape(n) {
+    etapeCourante = n;
+
+    document.querySelectorAll('.etape-form').forEach(e => {
+      e.classList.toggle('visible', Number(e.dataset.etape) === n);
+    });
+
+    // Le parcours en haut suit la progression
+    document.querySelectorAll('.jalon').forEach(j => {
+      const num = Number(j.dataset.jalon);
+      j.classList.toggle('actif', num === n);
+      j.classList.toggle('fait', num < n);
+      j.querySelector('.jalon-pastille').textContent = num < n ? '✓' : num;
+    });
+
+    if (n === DERNIERE) remplirRecap();
+
+    // On remonte pour que l'étape commence en haut de l'écran
+    parcours.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* --- Validation, étape par étape ------------------------------ */
+  function montrerErreur(champ, message) {
+    const p = document.getElementById('err-' + champ);
+    const input = document.getElementById(champ);
+    if (p) { p.textContent = message; p.classList.toggle('visible', Boolean(message)); }
+    if (input) {
+      if (message) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    }
+  }
+
+  const v = (id) => (document.getElementById(id).value || '').trim();
+
+  function validerEtape(n) {
+    let ok = true;
+
+    if (n === 1) {
+      ['nom', 'tel', 'zone', 'experience'].forEach(c => montrerErreur(c, ''));
+
+      if (v('nom').length < 3) { montrerErreur('nom', 'Indiquez votre nom complet.'); ok = false; }
+
+      const chiffres = v('tel').replace(/\D/g, '');
+      if (chiffres.length !== 8) {
+        montrerErreur('tel', 'Le numéro doit contenir 8 chiffres (ex : 76 12 34 56).'); ok = false;
+      }
+
+      if (!v('zone')) { montrerErreur('zone', 'Choisissez votre quartier.'); ok = false; }
+
+      const exp = v('experience');
+      if (exp === '' || Number(exp) < 0 || Number(exp) > 50) {
+        montrerErreur('experience', 'Indiquez un nombre entre 0 et 50.'); ok = false;
+      }
+    }
+
+    if (n === 2) {
+      ['moto', 'immat'].forEach(c => montrerErreur(c, ''));
+      if (v('moto').length < 2) { montrerErreur('moto', 'Indiquez le modèle de votre moto.'); ok = false; }
+      if (v('immat').length < 4) { montrerErreur('immat', "Indiquez l'immatriculation de la moto."); ok = false; }
+    }
+
+    if (n === 3) {
+      // Les quatre pièces sont obligatoires : c'est ce qui protège la flotte.
+      const pieces = [...document.querySelectorAll('[data-piece]')];
+      const manquantes = pieces.filter(p => !p.checked).length;
+      const err = document.getElementById('err-pieces');
+      if (manquantes) {
+        err.textContent = manquantes === 1
+          ? 'Il manque un document. Les quatre sont obligatoires pour rejoindre la flotte.'
+          : `Il manque ${manquantes} documents. Les quatre sont obligatoires pour rejoindre la flotte.`;
+        err.classList.add('visible');
+        ok = false;
+      } else {
+        err.classList.remove('visible');
+      }
+    }
+
+    if (n === 4) {
+      const eng = document.getElementById('engagement');
+      const err = document.getElementById('err-engagement');
+      if (!eng.checked) {
+        err.textContent = 'Vous devez certifier que vos informations sont exactes.';
+        err.classList.add('visible');
+        ok = false;
+      } else {
+        err.classList.remove('visible');
+      }
+    }
+
+    if (!ok) {
+      const premier = document.querySelector('.etape-form.visible [aria-invalid="true"], .etape-form.visible .erreur.visible');
+      if (premier) premier.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+    return ok;
+  }
+
+  /* --- Récapitulatif de la dernière étape ----------------------- */
+  function remplirRecap() {
+    const lignes = [
+      ['Nom complet', v('nom')],
+      ['Téléphone', v('tel')],
+      ['Quartier', v('zone')],
+      ['Expérience', v('experience') + ' an' + (Number(v('experience')) > 1 ? 's' : '')],
+      ['Moto', v('moto')],
+      ['Immatriculation', v('immat').toUpperCase()],
+      ['Dossier de séparation', document.getElementById('dossier').checked
+        ? 'Oui, moto équipée'
+        : 'Pas encore — rendez-vous à l\'atelier'],
+      ['Documents à présenter', document.querySelectorAll('[data-piece]:checked').length + ' sur 4'],
+    ];
+
+    document.getElementById('recap').innerHTML = lignes.map(([t, val]) => `
+      <div class="recap-ligne">
+        <dt>${echapper(t)}</dt>
+        <dd>${echapper(val || '—')}</dd>
+      </div>`).join('');
+  }
+
+  /* --- Boutons de navigation ------------------------------------ */
+  form.addEventListener('click', (e) => {
+    const suivant = e.target.closest('[data-suivant]');
+    if (suivant) {
+      if (validerEtape(etapeCourante)) montrerEtape(Number(suivant.dataset.suivant));
+      return;
+    }
+    const precedent = e.target.closest('[data-precedent]');
+    if (precedent) montrerEtape(Number(precedent.dataset.precedent));
+  });
+
+  /* --- Sans dossier : on oriente vers l'atelier ------------------ */
+  const casDossier = document.getElementById('dossier');
+  const aideAtelier = document.getElementById('aide-atelier');
+  function majAideAtelier() { aideAtelier.hidden = casDossier.checked; }
+  casDossier.addEventListener('change', majAideAtelier);
+  majAideAtelier();
+
+  /* --- Photo : aperçu et limite de taille ----------------------- */
+  let photoData = null;
+  const champPhoto = document.getElementById('photo');
+  const apercu = document.getElementById('apercu-photo');
+
+  champPhoto.addEventListener('change', () => {
+    const f = champPhoto.files[0];
+    photoData = null;
+    apercu.hidden = true;
+    montrerErreur('photo', '');
+
+    if (!f) return;
+    if (f.size > 2 * 1024 * 1024) {
+      montrerErreur('photo', 'La photo dépasse 2 Mo. Choisissez une image plus légère.');
+      champPhoto.value = '';
+      return;
+    }
+    const lecteur = new FileReader();
+    lecteur.onload = (ev) => {
+      photoData = ev.target.result;
+      apercu.querySelector('img').src = photoData;
+      apercu.hidden = false;
+    };
+    lecteur.readAsDataURL(f);
+  });
+
+  /* --- Envoi ----------------------------------------------------- */
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validerEtape(4)) return;
+
+    const tel = v('tel').replace(/\D/g, '').replace(/(\d{2})(?=\d)/g, '$1 ').trim();
+
+    const nouveau = BNK.inscrireChauffeur({
+      nom: v('nom'),
+      tel,
+      zone: v('zone'),
+      moto: v('moto'),
+      immat: v('immat').toUpperCase(),
+      experience: v('experience'),
+      dossier: document.getElementById('dossier').checked,
+      photo: photoData,
+    });
+
+    const msg = document.getElementById('succes-message');
+    msg.innerHTML = nouveau.dossier
+      ? `Merci <strong>${echapper(nouveau.nom)}</strong>. Votre dossier est en attente
+         de vérification. Nos équipes vous appellent au <strong>${echapper(nouveau.tel)}</strong>
+         sous 48 heures pour contrôler vos documents. Votre fiche est publiée
+         une fois la vérification faite.`
+      : `Merci <strong>${echapper(nouveau.nom)}</strong>. Votre moto n'a pas encore de
+         dossier de séparation : nos équipes vous appellent au
+         <strong>${echapper(nouveau.tel)}</strong> sous 48 heures pour organiser
+         l'installation avec notre atelier partenaire
+         (<strong>${echapper(BNK.ATELIER.tel)}</strong>) et contrôler vos documents.`;
+
+    form.hidden = true;
+    parcours.hidden = true;
+    succes.hidden = false;
+    succes.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
+
+  document.getElementById('btn-autre').addEventListener('click', () => {
+    form.reset();
+    photoData = null;
+    apercu.hidden = true;
+    majAideAtelier();
+    document.querySelectorAll('.erreur').forEach(p => p.classList.remove('visible'));
+    succes.hidden = true;
+    form.hidden = false;
+    parcours.hidden = false;
+    montrerEtape(1);
+  });
+})();
+</script>
+</body>
+</html>

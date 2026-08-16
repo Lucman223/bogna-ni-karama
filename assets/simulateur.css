@@ -1,0 +1,200 @@
+/* ============================================================
+   BOGNA NI KARAMA · Simulateur — trois téléphones, un écran
+   ============================================================ */
+
+.sim-entete {
+  background: linear-gradient(150deg, var(--vert-fonce), var(--vert));
+  color: #fff; padding: clamp(26px, 4vw, 44px) 0;
+}
+.sim-entete h1 {
+  font-size: clamp(26px, 3.8vw, 38px); margin: 12px 0 12px;
+  letter-spacing: -1px; line-height: 1.12; font-weight: 800;
+}
+.sim-entete h1 em { font-style: normal; color: var(--or); }
+.sim-entete p { font-size: clamp(15px, 1.9vw, 17.5px); opacity: .92; max-width: 68ch; margin: 0; }
+.sim-oeil {
+  display: inline-block; background: rgba(242,183,5,.17);
+  border: 1px solid rgba(242,183,5,.4); color: var(--or-clair);
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* --- Barre d'outils ------------------------------------------- */
+.sim-outils {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  margin-top: 22px; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.16);
+}
+.sim-outils .info { margin-left: auto; font-size: 13.5px; opacity: .78; }
+
+/* --- Les trois panneaux --------------------------------------- */
+.sim-scene {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  align-items: start; margin-top: 26px;
+}
+
+.tel {
+  background: var(--carte); border: 1px solid var(--bord);
+  border-radius: 18px; overflow: hidden;
+  box-shadow: var(--ombre);
+  display: flex; flex-direction: column;
+  min-height: 430px;
+}
+.tel-tete {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px; border-bottom: 1px solid var(--bord);
+}
+.tel-icone {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  display: grid; place-items: center; font-size: 17px;
+}
+.tel-tete strong { display: block; font-size: 15px; letter-spacing: -.2px; }
+.tel-tete span { display: block; font-size: 11.5px; color: var(--texte-doux); text-transform: uppercase; letter-spacing: .7px; }
+.tel-corps { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+/* Chaque acteur a sa couleur, pour suivre qui fait quoi */
+.tel--client   .tel-icone { background: #e8f1fb; }
+.tel--client   .tel-tete  { border-bottom-color: #cfe0f3; }
+.tel--chauffeur .tel-icone { background: #fef4dd; }
+.tel--chauffeur .tel-tete  { border-bottom-color: #f2e2bb; }
+.tel--admin    .tel-icone { background: #e8f2ea; }
+.tel--admin    .tel-tete  { border-bottom-color: #cadfd0; }
+
+/* --- Contenu des panneaux ------------------------------------- */
+.sim-champ { margin-bottom: 10px; }
+.sim-champ label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
+.sim-champ select, .sim-champ input {
+  padding: 9px 12px; font-size: 14px; border-radius: 9px;
+}
+.sim-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.sim-vide {
+  text-align: center; color: var(--texte-doux); font-size: 14px;
+  padding: 26px 12px; border: 1px dashed var(--bord); border-radius: 12px;
+}
+.sim-vide .ico { font-size: 26px; display: block; margin-bottom: 8px; opacity: .55; }
+
+/* Fiche d'une course dans un panneau */
+.sim-course {
+  border: 1px solid var(--bord); border-radius: 12px; padding: 13px 14px;
+  background: #fbfcfa;
+}
+.sim-course--vif { border-color: var(--vert); background: #f4faf5; }
+.sim-course-tete {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin-bottom: 8px;
+}
+.sim-course-tete strong { font-size: 14.5px; }
+.sim-trajet { font-size: 14px; margin: 0 0 8px; }
+.sim-trajet .fleche { color: var(--vert); font-weight: 700; }
+.sim-detail {
+  display: flex; gap: 14px; font-size: 12.5px; color: var(--texte-doux);
+  padding-top: 8px; border-top: 1px solid var(--bord); margin-bottom: 10px;
+}
+.sim-detail strong { color: var(--texte); font-weight: 700; }
+.sim-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+.sim-actions .btn { flex: 1; min-width: 90px; }
+
+/* Étiquettes d'état, mêmes codes couleur que le panneau admin */
+.et-equipement { background: #e0f4f2; color: #0a6b61; }
+
+/* --- Étoiles de notation -------------------------------------- */
+.sim-notes { display: flex; gap: 5px; }
+.sim-etoile {
+  background: none; border: 1px solid var(--bord); border-radius: 8px;
+  width: 32px; height: 32px; font-size: 15px; cursor: pointer;
+  color: #c9cfca; transition: all .15s;
+}
+.sim-etoile:hover { border-color: var(--or); color: var(--or); transform: translateY(-1px); }
+
+/* --- Candidature en cours : le parcours d'admission ------------ */
+.sim-titre-liste {
+  font-size: 12px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .7px; color: var(--texte-doux); margin: 4px 0 8px;
+}
+
+/* Les quatre jalons, en miniature */
+.sim-jalons { display: flex; gap: 4px; margin-bottom: 10px; }
+.sim-jalon {
+  flex: 1; height: 22px; border-radius: 6px;
+  display: grid; place-items: center;
+  background: #eef1ec; color: #9aa79f;
+  font-size: 11px; font-weight: 800;
+}
+.sim-jalon.fait  { background: #e4f4e8; color: #12703a; }
+.sim-jalon.actif { background: var(--vert); color: #fff; }
+
+.sim-etape-nom { margin: 0 0 2px; font-size: 14px; font-weight: 700; }
+.sim-etape-detail { margin: 0 0 10px; font-size: 12.5px; color: var(--texte-doux); }
+
+/* Les pièces à fournir, cochables une par une */
+.sim-pieces { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 8px; }
+.sim-piece {
+  border: 1px solid var(--bord); border-radius: 8px;
+  background: #fff; color: var(--texte-doux);
+  padding: 6px 8px; font-size: 11.5px; font-weight: 600;
+  font-family: inherit; cursor: pointer; text-align: left;
+  transition: all .15s;
+}
+.sim-piece:hover { border-color: var(--vert); color: var(--vert); }
+.sim-piece.ok { background: #e4f4e8; border-color: #a8d4b6; color: #12703a; }
+
+.sim-alerte-piece {
+  margin: 0 0 8px; font-size: 12px; font-weight: 600; color: #96690a;
+  background: #fef4dd; border-radius: 8px; padding: 6px 10px;
+}
+
+.sim-pieces-ok {
+  display: flex; align-items: center; gap: 6px;
+  margin: 0 0 8px; font-size: 12.5px; color: #12703a; font-weight: 600;
+}
+
+/* --- Compteurs de l'admin ------------------------------------- */
+.sim-chiffres { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sim-chiffre {
+  border: 1px solid var(--bord); border-radius: 10px; padding: 9px 11px;
+  background: #fbfcfa;
+}
+.sim-chiffre span { display: block; font-size: 10.5px; color: var(--texte-doux); text-transform: uppercase; letter-spacing: .6px; }
+.sim-chiffre strong { font-size: 19px; font-weight: 800; color: var(--vert); letter-spacing: -.5px; }
+.sim-chiffre--or strong { color: #96690a; }
+
+/* --- Journal des évènements ----------------------------------- */
+.sim-journal {
+  background: var(--carte); border: 1px solid var(--bord);
+  border-radius: var(--rayon); margin-top: 22px; overflow: hidden;
+}
+.sim-journal-tete {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px; border-bottom: 1px solid var(--bord);
+}
+.sim-journal-tete h2 { margin: 0; font-size: 16.5px; }
+.sim-journal-tete .compte { margin-left: auto; font-size: 13px; color: var(--texte-doux); }
+.sim-journal-liste { max-height: 260px; overflow-y: auto; }
+.sim-ligne {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 9px 18px; border-bottom: 1px solid #f1f4f0; font-size: 14px;
+}
+.sim-ligne:last-child { border-bottom: none; }
+.sim-ligne .h { font-size: 12px; color: #9aa79f; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.sim-ligne .qui {
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px;
+  padding: 2px 8px; border-radius: 999px; flex-shrink: 0;
+}
+.qui-client    { background: #e8f1fb; color: #17457e; }
+.qui-chauffeur { background: #fef4dd; color: #8a6202; }
+.qui-admin     { background: #e8f2ea; color: #12703a; }
+
+/* --- Scénario guidé ------------------------------------------- */
+.sim-guide {
+  background: #fffaee; border: 1px solid #f2e2bb; border-left: 4px solid var(--or);
+  border-radius: 0 12px 12px 0; padding: 16px 20px; margin-top: 22px;
+}
+.sim-guide h3 { margin: 0 0 8px; font-size: 15.5px; color: #8a6202; }
+.sim-guide ol { margin: 0; padding-left: 20px; font-size: 14.5px; }
+.sim-guide li { margin-bottom: 4px; }
+
+@media (max-width: 980px) {
+  .sim-scene { grid-template-columns: 1fr; }
+  .tel { min-height: auto; }
+}

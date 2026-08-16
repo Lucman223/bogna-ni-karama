@@ -1,0 +1,308 @@
+/* ============================================================
+   BOGNA NI KARAMA · Dossier de présentation imprimé
+   ------------------------------------------------------------
+   Mise en page pensée pour le PDF : une page = une idée.
+   Mêmes couleurs que la plateforme, pour que le document et le
+   site se ressemblent.
+   ============================================================ */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+:root {
+  --vert:       #0d5c2f;
+  --vert-fonce: #06381c;
+  --vert-clair: #14803f;
+  --or:         #f2b705;
+  --or-clair:   #ffd75e;
+  --rouge:      #c81e1e;
+  --texte:      #16241b;
+  --doux:       #5b6b60;
+  --bord:       #e2e7e1;
+  --fond-doux:  #f6f8f5;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--texte);
+  font-size: 10pt;
+  line-height: 1.5;
+  background: #fff;
+}
+
+/* --- Une page du dossier -------------------------------------- */
+.page {
+  position: relative;
+  width: 210mm;
+  /* Hauteur EXACTE, pas min-height : sinon un contenu un peu long pousse
+     quelques millimètres sur une page suivante presque vide. */
+  height: 297mm;
+  padding: 20mm 18mm 22mm;
+  page-break-after: always;
+  break-after: page;
+  overflow: hidden;
+}
+.page:last-child { page-break-after: auto; break-after: auto; }
+
+/* Pied de page discret, répété */
+.pied-page {
+  position: absolute; bottom: 12mm; left: 18mm; right: 18mm;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 8pt; color: #9aa79f;
+  border-top: 1px solid var(--bord); padding-top: 5px;
+}
+.pied-page strong { color: var(--vert); font-weight: 600; }
+
+/* ============================================================
+   COUVERTURE
+   ============================================================ */
+.couverture {
+  padding: 0;
+  display: flex; flex-direction: column;
+  color: #fff;
+  background: linear-gradient(155deg, var(--vert-fonce) 0%, var(--vert) 62%, var(--vert-clair) 100%);
+}
+.couv-photo { position: relative; height: 120mm; overflow: hidden; background: #06381c; }
+/* On cadre sur le haut de l'image : le bas de cette photo tire vers le
+   magenta quand on l'agrandit, on l'écarte du cadrage. */
+.couv-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+/* Fondu vers le vert uniquement sur le bas de la photo : la partie haute
+   garde ses couleurs d'origine (un dégradé sur toute la hauteur teintait
+   l'image à l'impression). */
+.couv-photo::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 45mm;
+  background: linear-gradient(180deg, rgba(6,56,28,0) 0%, rgba(6,56,28,.55) 45%, #06381c 100%);
+}
+.couv-corps { flex: 1; padding: 10mm 18mm 18mm; display: flex; flex-direction: column; }
+
+.couv-marque { display: flex; align-items: center; gap: 10px; margin-bottom: 12mm; }
+.couv-logo {
+  width: 15mm; height: 15mm; border-radius: 4mm;
+  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3);
+  display: flex; align-items: center; justify-content: center; font-size: 19pt;
+}
+.couv-marque strong { display: block; font-size: 15pt; letter-spacing: -.3pt; }
+.couv-marque span { display: block; font-size: 8.5pt; letter-spacing: 1.6pt; text-transform: uppercase; opacity: .7; }
+
+.couv-titre {
+  font-size: 30pt; line-height: 1.08; font-weight: 800;
+  letter-spacing: -1.1pt; margin: 0 0 6mm;
+}
+.couv-titre em { font-style: normal; color: var(--or); }
+.couv-sous { font-size: 11.5pt; line-height: 1.55; opacity: .92; max-width: 105mm; margin: 0 0 auto; }
+
+.couv-badge {
+  display: inline-block; align-self: flex-start;
+  background: rgba(242,183,5,.16); border: 1px solid rgba(242,183,5,.42);
+  color: var(--or-clair); padding: 2.5mm 6mm; border-radius: 20mm;
+  font-size: 8.5pt; font-weight: 700; margin-bottom: 8mm;
+}
+
+.couv-auteur {
+  border-top: 1px solid rgba(255,255,255,.22); padding-top: 5mm; margin-top: 8mm;
+  display: flex; justify-content: space-between; align-items: flex-end; font-size: 9.5pt;
+}
+.couv-auteur strong { color: var(--or); font-size: 12pt; }
+
+/* ============================================================
+   TITRES DE SECTION
+   ============================================================ */
+.oeil {
+  display: inline-block; background: #e8f2ea; color: var(--vert);
+  padding: 1.6mm 4.5mm; border-radius: 20mm;
+  font-size: 7.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1pt;
+  margin-bottom: 4mm;
+}
+h1.section {
+  font-size: 19.5pt; line-height: 1.14; font-weight: 800;
+  letter-spacing: -.7pt; margin: 0 0 4mm; color: var(--texte);
+}
+h1.section em { font-style: normal; color: var(--vert); }
+h2.sous {
+  font-size: 13pt; font-weight: 700; letter-spacing: -.3pt;
+  margin: 6mm 0 3mm; color: var(--vert);
+  padding-bottom: 2mm; border-bottom: 2px solid #e4efe7;
+}
+h3.mini {
+  font-size: 10.5pt; font-weight: 700; margin: 0 0 2mm; color: var(--texte);
+}
+p { margin: 0 0 3mm; }
+.intro { font-size: 10.5pt; color: var(--doux); max-width: 150mm; }
+strong { font-weight: 700; }
+
+/* Numéro de section géant en filigrane */
+.num-section {
+  position: absolute; top: 14mm; right: 14mm;
+  font-size: 46pt; font-weight: 800; color: #eef3ef; line-height: 1;
+}
+
+/* ============================================================
+   BLOCS
+   ============================================================ */
+.grille-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.grille-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+
+.carte {
+  border: 1px solid var(--bord); border-radius: 3mm;
+  padding: 4mm 4.5mm 3.5mm; background: #fff;
+}
+.carte--douce { background: var(--fond-doux); }
+.carte--verte { background: #eef5f0; border-color: #c9dfd0; }
+
+/* Encadré coloré pour un message clé */
+.encadre {
+  border-left: 4px solid var(--vert); background: var(--fond-doux);
+  border-radius: 0 3mm 3mm 0; padding: 4mm 5mm; margin: 4mm 0;
+}
+.encadre--or { border-left-color: var(--or); background: #fffaee; }
+.encadre--rouge { border-left-color: var(--rouge); background: #fdf1f1; }
+.encadre p:last-child { margin-bottom: 0; }
+.encadre .titre { font-weight: 800; color: var(--vert); margin-bottom: 1.5mm; }
+.encadre--or .titre { color: #8a6202; }
+.encadre--rouge .titre { color: #a51b1b; }
+
+/* Bandeau plein vert pour une phrase forte */
+.bandeau {
+  background: linear-gradient(120deg, var(--vert-fonce), var(--vert));
+  color: #fff; border-radius: 4mm; padding: 6mm 7mm; margin: 5mm 0;
+}
+.bandeau .phrase { font-size: 13.5pt; font-weight: 800; line-height: 1.25; margin: 0; letter-spacing: -.4pt; }
+.bandeau .phrase em { font-style: normal; color: var(--or); }
+.bandeau p.detail { margin: 3mm 0 0; opacity: .9; font-size: 10pt; }
+
+/* --- Chiffres clés -------------------------------------------- */
+.chiffres { display: flex; gap: 6mm; margin: 5mm 0; }
+.chiffre { flex: 1; text-align: center; border: 1px solid var(--bord); border-radius: 3mm; padding: 5mm 3mm; }
+.chiffre strong { display: block; font-size: 26pt; font-weight: 800; color: var(--vert); line-height: 1; letter-spacing: -1pt; }
+.chiffre span { display: block; font-size: 8.5pt; color: var(--doux); margin-top: 1.5mm; }
+.chiffre--or strong { color: var(--or); }
+
+/* --- Listes --------------------------------------------------- */
+ul.atouts { list-style: none; padding: 0; margin: 0; }
+ul.atouts li { position: relative; padding-left: 6.4mm; margin-bottom: 2mm; }
+ul.atouts li::before {
+  content: '✓'; position: absolute; left: 0; top: 0;
+  width: 4.6mm; height: 4.6mm; border-radius: 50%;
+  background: #e4f4e8; color: #12703a;
+  font-size: 7pt; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+ul.manques li::before { content: '×'; background: #f2f4f1; color: #94a29a; }
+ul.compact li { margin-bottom: 1.6mm; font-size: 9.5pt; }
+
+/* --- Parcours en étapes --------------------------------------- */
+.parcours { display: grid; gap: 2.4mm; margin: 3.5mm 0; }
+.etape { display: flex; gap: 3.5mm; align-items: flex-start; }
+.etape-num {
+  flex-shrink: 0; width: 7mm; height: 7mm; border-radius: 50%;
+  background: var(--vert); color: #fff;
+  font-size: 8.5pt; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.etape-corps { padding-top: .4mm; }
+.etape-corps strong { display: block; font-size: 10pt; }
+.etape-corps span { color: var(--doux); font-size: 9.5pt; }
+.parcours--or .etape-num { background: var(--or); color: #2a1f00; }
+
+/* --- Avant / après -------------------------------------------- */
+.avant-apres { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin: 5mm 0; }
+.colonne { border-radius: 3mm; padding: 5mm; }
+.colonne--avant { background: #fdf1f1; border: 1px solid #f3d4d4; }
+.colonne--apres { background: #eef5f0; border: 1px solid #c9dfd0; }
+.colonne h3 { margin: 0 0 3mm; font-size: 11pt; }
+.colonne--avant h3 { color: #a51b1b; }
+.colonne--apres h3 { color: var(--vert); }
+.colonne ul { list-style: none; padding: 0; margin: 0; font-size: 9.5pt; }
+.colonne li { position: relative; padding-left: 6mm; margin-bottom: 2.2mm; }
+.colonne--avant li::before { content: '×'; position: absolute; left: 0; color: #c86b6b; font-weight: 800; }
+.colonne--apres li::before { content: '✓'; position: absolute; left: 0; color: #12703a; font-weight: 800; }
+
+/* --- Photos et captures --------------------------------------- */
+figure { margin: 0; }
+figure img { width: 100%; height: auto; display: block; border-radius: 3mm; }
+figcaption { font-size: 8.5pt; color: var(--doux); font-style: italic; margin-top: 2mm; }
+.capture img { border: 1px solid var(--bord); border-radius: 2mm; }
+/* Les captures d'écran sont larges : on les borne en hauteur pour
+   qu'elles ne poussent pas le reste de la page. */
+.capture-large img { max-height: 92mm; object-fit: cover; object-position: top center; }
+.capture-large { margin: 4mm 0 2mm; }
+
+/* --- Tableaux ------------------------------------------------- */
+table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+th {
+  text-align: left; padding: 3mm 3mm; background: var(--vert); color: #fff;
+  font-size: 8pt; text-transform: uppercase; letter-spacing: .6pt; font-weight: 700;
+}
+th:first-child { border-radius: 2mm 0 0 0; }
+th:last-child { border-radius: 0 2mm 0 0; }
+td { padding: 2.6mm 3mm; border-bottom: 1px solid #eef1ec; }
+
+/* Le comparatif a beaucoup de lignes : il lui faut sa propre densité
+   pour tenir sur une page sans déborder. */
+#comparatif { font-size: 8.8pt; }
+#comparatif th { padding: 2.2mm 3mm; }
+#comparatif td { padding: 1.5mm 3mm; }
+tbody tr:nth-child(even) { background: var(--fond-doux); }
+.c { text-align: center; }
+td.oui { color: #12703a; font-weight: 800; }
+td.non { color: #b9c3bc; }
+.ligne-total td { background: #e8f2ea; font-weight: 700; border-bottom: none; }
+.ligne-total td:first-child { border-radius: 0 0 0 2mm; }
+.ligne-total td:last-child { border-radius: 0 0 2mm 0; }
+.opt {
+  background: var(--or); color: #2a1f00; padding: .6mm 2.4mm; border-radius: 10mm;
+  font-size: 7.5pt; font-weight: 800; text-transform: uppercase;
+}
+
+/* --- Cartes de prix ------------------------------------------- */
+.formules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 5mm 0; }
+.formule {
+  border: 1px solid var(--bord); border-radius: 3mm; padding: 5mm 4mm;
+  display: flex; flex-direction: column;
+}
+.formule--phare { border: 2px solid var(--vert); background: #fbfdfb; }
+.formule .ruban {
+  background: var(--vert); color: #fff; font-size: 7pt; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .7pt;
+  padding: 1.2mm 3mm; border-radius: 10mm; align-self: flex-start; margin-bottom: 2.5mm;
+}
+.formule h3 { margin: 0 0 1mm; font-size: 13pt; letter-spacing: -.3pt; }
+.formule .accroche { font-size: 8.5pt; color: var(--doux); margin: 0 0 3mm; }
+.formule .prix { font-size: 14.5pt; font-weight: 800; color: var(--vert); line-height: 1.1; letter-spacing: -.5pt; }
+.formule .prix-eur { font-size: 8.5pt; color: var(--doux); margin: .5mm 0 3mm; }
+.formule .capacite {
+  font-size: 8.5pt; font-weight: 700; padding: 2mm 0 3mm; margin-bottom: 3mm;
+  border-top: 1px solid var(--bord); border-bottom: 1px solid var(--bord);
+}
+.formule ul { list-style: none; padding: 0; margin: 0; font-size: 9pt; }
+.formule li { position: relative; padding-left: 4.5mm; margin-bottom: 1.6mm; }
+.formule li::before { content: '·'; position: absolute; left: 1mm; color: var(--vert); font-weight: 800; }
+
+/* --- Sommaire ------------------------------------------------- */
+.sommaire { list-style: none; padding: 0; margin: 6mm 0 0; }
+.sommaire li {
+  display: flex; align-items: baseline; gap: 3mm;
+  padding: 3mm 0; border-bottom: 1px solid var(--bord); font-size: 11pt;
+}
+.sommaire .n {
+  flex-shrink: 0; width: 7mm; height: 7mm; border-radius: 50%;
+  background: #e8f2ea; color: var(--vert); font-size: 8.5pt; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.sommaire .t { font-weight: 600; }
+.sommaire .d { color: var(--doux); font-size: 9.5pt; margin-left: auto; text-align: right; }
+
+/* --- Contact final -------------------------------------------- */
+.contact {
+  background: linear-gradient(150deg, var(--vert-fonce), var(--vert));
+  color: #fff; border-radius: 4mm; padding: 8mm; text-align: center; margin-top: 5mm;
+}
+.contact .nom { font-size: 16pt; font-weight: 800; color: var(--or); margin: 0 0 2mm; }
+.contact p { margin: 0 0 1.5mm; font-size: 11pt; }
+.contact .lien { font-size: 10pt; opacity: .85; }

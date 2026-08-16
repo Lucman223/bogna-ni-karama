@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon Profil Chauffeur — Bogna Ni Karama</title>
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <nav class="nav" id="nav-principale">
+      <a href="profil-chauffeur.html" class="actif">Tableau de Bord</a>
+      <a href="index.html" style="color:var(--rouge);">Déconnexion</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="conteneur dashboard-grid">
+    
+    <!-- Sidebar -->
+    <aside class="perfil-sidebar">
+      <div class="perfil-avatar" id="avatarChauffeur">C</div>
+      <h3 id="nomChauffeur">Chauffeur</h3>
+      <p id="telChauffeur">70 00 00 00</p>
+      
+      <div class="etiquette et-valide" style="margin-bottom: 20px;">Dossier Validé</div>
+      
+      <ul style="list-style: none; padding: 0; text-align: left; border-top: 1px solid var(--bord); padding-top: 15px; margin-top: 15px;">
+        <li style="margin-bottom: 8px; font-size: 14px;"><strong style="display:inline-block; width: 60px;">Zone:</strong> <span id="zoneChauffeur">Bamako</span></li>
+        <li style="margin-bottom: 8px; font-size: 14px;"><strong style="display:inline-block; width: 60px;">Moto:</strong> <span id="motoChauffeur">Moto</span></li>
+        <li style="margin-bottom: 8px; font-size: 14px;"><strong style="display:inline-block; width: 60px;">Immat:</strong> <span id="immatChauffeur">0000</span></li>
+      </ul>
+      
+      <button class="btn btn-contour" style="margin-top: 20px;">Modifier infos</button>
+    </aside>
+
+    <!-- Contenu Principal -->
+    <div class="dashboard-contenido">
+      
+      <!-- Alerta Dossier Manquant -->
+      <div id="alerteDossier" class="alerte alerte-info" style="display:none; background-color: #fff0f0; border-color: #ffb3b3; color: #cc0000; margin-bottom: 20px; align-items: flex-start; padding: 20px;">
+        <span style="font-size: 24px; margin-right: 15px;">⚠️</span>
+        <div>
+          <strong style="display: block; font-size: 16px; margin-bottom: 5px;">Action requise : Votre profil est inactif</strong>
+          <span style="font-size: 14px;">Vous devez vous rendre à notre garage partenaire pour installer le dossier de séparation obligatoire. Une fois installé, votre compte sera activé pour recevoir des courses.</span>
+        </div>
+      </div>
+      
+      <!-- Switch de estado -->
+      <div class="estado-switch" id="boxEstado">
+        <div>
+          <strong id="texteLigne">En Ligne (Prêt à recevoir)</strong>
+          <span style="font-size: 13px; color: var(--texte-doux);" id="descLigne">Votre fiche est visible dans l'annuaire.</span>
+        </div>
+        <label class="bascule-dossier" id="labelBascule" style="background: var(--vert); color: white; border-color: var(--vert);">
+          <input type="checkbox" id="checkLigne" checked style="pointer-events: none;"> <span id="texteBascule">Actif</span>
+        </label>
+      </div>
+
+      <!-- Botón simulador temporal -->
+      <button id="btnSimulerCourse" class="btn btn-principal" style="width:100%; font-size:14px; background:#e63946; border-color:#e63946; margin-bottom: 20px;" onclick="openModal('modalRecevoir')">
+        ⚠️ Simuler la réception d'une course audio
+      </button>
+      
+      <!-- Ingresos y stats -->
+      <div class="grille-stats">
+        <div class="tuile t-attente">
+          <span>Courses du jour</span>
+          <strong>8</strong>
+        </div>
+        <div class="tuile t-dossier">
+          <span>Revenus estimés</span>
+          <strong>12 000 F</strong>
+        </div>
+        <div class="tuile">
+          <span>Note moyenne</span>
+          <strong>4.9 <span style="font-size:16px;">⭐</span></strong>
+        </div>
+      </div>
+
+      <!-- Historial de viajes del conductor -->
+      <div class="tarjeta-dash">
+        <h4><span aria-hidden="true">🛣️</span> Dernières courses effectuées</h4>
+        <ul class="lista-historial">
+          <li>
+            <div>
+              <div class="historial-ruta">Client: Ousmane S.</div>
+              <div class="historial-fecha">Aujourd'hui, 14:30 · Kalaban Coro ➔ ACI 2000</div>
+            </div>
+            <div class="historial-precio">2500 F</div>
+          </li>
+          <li>
+            <div>
+              <div class="historial-ruta">Client: Aminata K.</div>
+              <div class="historial-fecha">Aujourd'hui, 10:15 · Djicoroni ➔ Grand Marché</div>
+            </div>
+            <div class="historial-precio">1000 F</div>
+          </li>
+          <li>
+            <div>
+              <div class="historial-ruta">Client: Ibrahim F. (Livraison colis)</div>
+              <div class="historial-fecha">Hier, 16:00 · Hamdallaye ➔ Baco Djicoroni</div>
+            </div>
+            <div class="historial-precio">1500 F</div>
+          </li>
+        </ul>
+        <button class="btn btn-contour btn-petit" style="margin-top: 16px;">Voir tous les revenus</button>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Modal: Recibir Viaje -->
+<div id="modalRecevoir" class="modal-overlay">
+  <div class="modal-content" style="border: 2px solid var(--vert);">
+    <div class="modal-header" style="text-align: center;">
+      <span style="font-size:40px; display:block; margin-bottom:10px;">🚨</span>
+      <h3 style="color:var(--vert); font-size:24px;">Nouvelle Course !</h3>
+      <p>Un client souhaite voyager.</p>
+    </div>
+    
+    <div class="modal-body" id="recevoirBody">
+      <div style="background:#f4f6f4; border-radius:12px; padding:20px; margin-bottom:20px;">
+        <strong style="display:block; margin-bottom:12px; font-size:14px; color:var(--texte-doux);">Écoutez le lieu de départ :</strong>
+        <div class="audio-player">
+          <button class="btn-play">▶</button>
+          <div class="audio-wave"></div>
+          <span style="font-size:12px; font-weight:600; color:var(--vert);">0:03</span>
+        </div>
+
+        <strong style="display:block; margin:20px 0 12px; font-size:14px; color:var(--texte-doux);">Écoutez la destination :</strong>
+        <div class="audio-player">
+          <button class="btn-play">▶</button>
+          <div class="audio-wave"></div>
+          <span style="font-size:12px; font-weight:600; color:var(--vert);">0:04</span>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-contour" style="flex:1;" onclick="closeModal('modalRecevoir')">Refuser</button>
+        <button class="btn btn-principal" style="flex:2;" onclick="accepterCourse()">Accepter (1500 F)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Lógica de Modales
+  function openModal(id) {
+    document.getElementById(id).classList.add('activo');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('activo');
+  }
+
+  function accepterCourse() {
+    const body = document.getElementById('recevoirBody');
+    body.innerHTML = `
+      <div style="text-align:center; padding: 20px 0;">
+        <span style="font-size:50px; display:block; margin-bottom:10px;">✅</span>
+        <h4 style="margin:0 0 5px; font-size:18px;">Course Acceptée</h4>
+        <p style="color:var(--texte-doux); margin-bottom:20px;">Le client vous attend.</p>
+        <div class="favori-item" style="background:#fff; border:1px solid var(--bord); text-align:left; margin-bottom: 20px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="perfil-avatar" style="width:40px; height:40px; margin:0;">A</div>
+            <div class="favori-item-info">
+              <strong>Ami Traoré</strong>
+              <span style="color:var(--vert); font-weight:bold;">📍 Kalaban Coro</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <button class="btn btn-principal" style="width:100%; background: #12703a; border-color: #12703a; margin-bottom: 8px;" onclick="alert('Appel VoIP en cours... Numéro masqué.')">📞 Appel Sécurisé</button>
+          <p style="font-size: 11px; text-align: center; color: var(--texte-doux); margin:0;">(Le numéro du client est masqué)</p>
+        </div>
+
+        <div style="margin-bottom: 20px; text-align: left;">
+          <strong style="display:block; font-size: 13px; margin-bottom: 10px; color: var(--texte-doux);">Messages rapides :</strong>
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au client')">Je suis en route</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au client')">Je suis arrivé</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au client')">Il y a des embouteillages</button>
+          </div>
+        </div>
+
+        <button class="btn btn-contour" style="width:100%; margin-top:10px; color: var(--rouge); border-color: var(--rouge);" onclick="closeModal('modalRecevoir')">Terminer / Annuler la course</button>
+      </div>
+    `;
+  }
+
+  // Simular la carga de datos del registro
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const nom = urlParams.get('nom') || 'Moussa Diarra';
+  const tel = urlParams.get('tel') || '71 02 91 58';
+  const zone = urlParams.get('zone') || 'Kalaban Coro';
+  const moto = urlParams.get('moto') || 'Djakarta 125';
+  const immat = urlParams.get('immat') || 'BKO 4521 MC';
+  const dossier = urlParams.get('dossier');
+  
+  document.getElementById('nomChauffeur').textContent = nom;
+  document.getElementById('avatarChauffeur').textContent = nom.charAt(0).toUpperCase();
+  document.getElementById('telChauffeur').textContent = tel;
+  document.getElementById('zoneChauffeur').textContent = zone;
+  document.getElementById('motoChauffeur').textContent = moto;
+  document.getElementById('immatChauffeur').textContent = immat;
+
+  // Lógica de Bloqueo por falta de Dossier
+  if (dossier === 'false') {
+    document.getElementById('alerteDossier').style.display = 'flex';
+    
+    // Cambiar estado a Inactivo
+    const texteLigne = document.getElementById('texteLigne');
+    const descLigne = document.getElementById('descLigne');
+    const checkLigne = document.getElementById('checkLigne');
+    const labelBascule = document.getElementById('labelBascule');
+    const texteBascule = document.getElementById('texteBascule');
+    
+    texteLigne.textContent = 'Hors Ligne (Dossier requis)';
+    texteLigne.style.color = '#cc0000';
+    descLigne.textContent = "Votre compte est suspendu temporairement.";
+    
+    checkLigne.checked = false;
+    labelBascule.style.background = '#f4f6f4';
+    labelBascule.style.borderColor = '#ccc';
+    labelBascule.style.color = '#999';
+    texteBascule.textContent = 'Inactif';
+    
+    // Ocultar botón de simulador
+    document.getElementById('btnSimulerCourse').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

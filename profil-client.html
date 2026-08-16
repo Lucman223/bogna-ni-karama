@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon Profil Client — Bogna Ni Karama</title>
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Moto Taxi · Bamako</span>
+      </div>
+    </a>
+    <nav class="nav" id="nav-principale">
+      <a href="chauffeurs.html">Rechercher une moto</a>
+      <a href="profil-client.html" class="actif">Mon Profil</a>
+      <a href="index.html" style="color:var(--rouge);">Déconnexion</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="conteneur dashboard-grid">
+    
+    <!-- Sidebar -->
+    <aside class="perfil-sidebar">
+      <div class="perfil-avatar" id="avatarClient">U</div>
+      <h3 id="nomClient">Client Bamako</h3>
+      <p id="telClient">70 00 00 00</p>
+      
+      <div style="border-top: 1px solid var(--bord); padding-top: 20px; margin-top: 20px;">
+        <span class="section-oeil" style="font-size: 11px;">Mon Quartier par défaut</span>
+        <strong style="display:block; font-size: 18px; margin-top: 4px;" id="zoneClient">Hamdallaye</strong>
+      </div>
+      
+      <button class="btn btn-contour" style="margin-top: 20px;" onclick="openModal('modalEdit')">Modifier mon profil</button>
+    </aside>
+
+    <!-- Contenu Principal -->
+    <div class="dashboard-contenido">
+      
+      <div class="tarjeta-dash">
+        <h4><span aria-hidden="true">🚀</span> Accès Rapide</h4>
+        <a href="#" class="action-card" onclick="event.preventDefault(); openModal('modalCommander')">
+          <div class="action-card-info">
+            <strong>Commander une moto maintenant</strong>
+            <span>Trouvez un chauffeur disponible dans votre quartier</span>
+          </div>
+          <span aria-hidden="true" style="font-size: 24px;">➡️</span>
+        </a>
+      </div>
+
+      <div class="tarjeta-dash">
+        <h4><span aria-hidden="true">📅</span> Mon Historique de Trajets</h4>
+        <ul class="lista-historial">
+          <li>
+            <div>
+              <div class="historial-ruta">Hamdallaye ➔ Grand Marché</div>
+              <div class="historial-fecha">Il y a 2 jours · Chauffeur: Moussa T.</div>
+            </div>
+            <div class="historial-precio">1000 F</div>
+          </li>
+          <li>
+            <div>
+              <div class="historial-ruta">Hamdallaye ➔ ACI 2000</div>
+              <div class="historial-fecha">Il y a 5 jours · Chauffeur: Oumar D.</div>
+            </div>
+            <div class="historial-precio">500 F</div>
+          </li>
+          <li>
+            <div>
+              <div class="historial-ruta">ACI 2000 ➔ Kalaban Coro</div>
+              <div class="historial-fecha">Il y a une semaine · Chauffeur: Seydou K.</div>
+            </div>
+            <div class="historial-precio">1500 F</div>
+          </li>
+        </ul>
+        <button class="btn btn-contour btn-petit" style="margin-top: 16px;">Voir tout l'historique</button>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Modales -->
+
+<!-- 1. Modal: Pedir Moto -->
+<div id="modalCommander" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modalCommander')">×</button>
+    <div class="modal-header" id="commanderHeader">
+      <h3>Demander une moto (Audio)</h3>
+      <p>Appuyez sur le micro pour enregistrer votre destination.</p>
+    </div>
+    <div class="modal-body" id="commanderBody">
+      
+      <div class="audio-recorder" id="recDepart">
+        <button class="btn-mic" onclick="simulateRecord('Depart')" type="button">🎙️</button>
+        <div class="audio-status" id="statDepart">Départ: <span style="font-weight:normal;" id="txtDepartVal">...</span></div>
+      </div>
+
+      <div class="audio-recorder" id="recDest">
+        <button class="btn-mic" onclick="simulateRecord('Dest')" type="button">🎙️</button>
+        <div class="audio-status" id="statDest">Destination (Appuyez pour parler)</div>
+      </div>
+
+      <div id="prixEstime" style="display:none; padding: 10px; background: #eef2ec; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+        <span style="display:block; font-size:12px; color:var(--texte-doux);">Prix estimé</span>
+        <strong style="font-size:20px; color:var(--vert);" id="prixTxt">-- F</strong>
+      </div>
+      <button class="btn btn-principal" style="width:100%;" id="btnConfirmerCmd" disabled>Confirmer la commande</button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 3. Modal: Editar Perfil -->
+<div id="modalEdit" class="modal-overlay">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('modalEdit')">×</button>
+    <div class="modal-header">
+      <h3>Modifier mon profil</h3>
+      <p>Mettez à jour vos informations.</p>
+    </div>
+    <div class="modal-body">
+      <div class="champ">
+        <label>Nom complet</label>
+        <input type="text" id="editNom">
+      </div>
+      <div class="champ">
+        <label>Téléphone</label>
+        <input type="tel" id="editTel">
+      </div>
+      <div class="champ">
+        <label>Quartier par défaut</label>
+        <input type="text" id="editZone">
+      </div>
+      <button class="btn btn-principal" style="width:100%;" onclick="sauvegarderProfil()">Enregistrer les modifications</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Simular la carga de datos del registro
+  const urlParams = new URLSearchParams(window.location.search);
+  const nom = urlParams.get('nom') || 'Ami Traoré';
+  const tel = urlParams.get('tel') || '76 54 32 10';
+  const zone = urlParams.get('zone') || 'ACI 2000';
+  
+  document.getElementById('nomClient').textContent = nom;
+  document.getElementById('avatarClient').textContent = nom.charAt(0).toUpperCase();
+  document.getElementById('telClient').textContent = tel;
+  document.getElementById('zoneClient').textContent = zone;
+  
+  // Rellenar datos en los modales
+  document.getElementById('txtDepartVal').textContent = zone;
+  document.getElementById('editNom').value = nom;
+  document.getElementById('editTel').value = tel;
+  document.getElementById('editZone').value = zone;
+
+  // Lógica de Modales
+  function openModal(id) {
+    document.getElementById(id).classList.add('activo');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('activo');
+  }
+
+  // Lógica de Pedir Moto por Audio
+  let destRecorded = false;
+  
+  window.simulateRecord = function(type) {
+    const recDiv = document.getElementById('rec' + type);
+    const stat = document.getElementById('stat' + type);
+    
+    if (recDiv.classList.contains('recorded') || recDiv.classList.contains('recording')) return;
+    
+    recDiv.classList.add('recording');
+    stat.textContent = "Grabando... Habla ahora.";
+    
+    setTimeout(() => {
+      recDiv.classList.remove('recording');
+      recDiv.classList.add('recorded');
+      stat.textContent = "Audio grabado (0:04)";
+      recDiv.querySelector('.btn-mic').textContent = "▶️";
+      
+      if (type === 'Dest') {
+        destRecorded = true;
+        document.getElementById('prixEstime').style.display = 'block';
+        document.getElementById('prixTxt').textContent = '1000 F - 1500 F';
+        document.getElementById('btnConfirmerCmd').disabled = false;
+      }
+    }, 3000);
+  };
+
+  document.getElementById('btnConfirmerCmd').addEventListener('click', () => {
+    if(!destRecorded) return;
+    const body = document.getElementById('commanderBody');
+    const header = document.getElementById('commanderHeader');
+    
+    // Estado de carga
+    header.innerHTML = `<h3>Envoi de votre demande...</h3><p>Recherche des chauffeurs à proximité.</p>`;
+    body.innerHTML = `<div class="simulador-loader"><div class="spinner"></div><p>Analyse de la destination audio...</p></div>`;
+    
+    // Simular éxito después de 2.5s
+    setTimeout(() => {
+      header.innerHTML = `<h3 style="color:var(--vert);">Moto trouvée !</h3><p>Le chauffeur a accepté votre audio.</p>`;
+      body.innerHTML = `
+        <div class="favori-item" style="background:#eef2ec; border:1px solid var(--vert); margin-bottom: 20px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="perfil-avatar" style="width:50px; height:50px; margin:0;">M</div>
+            <div class="favori-item-info">
+              <strong style="color:var(--vert); font-size:18px;">Moussa Traoré</strong>
+              <span>Djakarta 125 · Arrive dans 3 min</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <button class="btn btn-principal" style="width:100%; background: #12703a; border-color: #12703a; margin-bottom: 8px;" onclick="alert('Appel VoIP en cours... Numéro masqué.')">📞 Appel Sécurisé</button>
+          <p style="font-size: 11px; text-align: center; color: var(--texte-doux); margin:0;">(Votre numéro reste confidentiel)</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <strong style="display:block; font-size: 13px; margin-bottom: 10px; color: var(--texte-doux);">Messages rapides :</strong>
+          <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px;">
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au chauffeur')">Je suis là</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au chauffeur')">J'arrive</button>
+            <button class="btn btn-contour btn-petit" style="white-space: nowrap;" onclick="alert('Message envoyé au chauffeur')">Attendez-moi</button>
+          </div>
+        </div>
+
+        <button class="btn btn-contour" style="width:100%; margin-top:15px; color: var(--rouge); border-color: var(--rouge);" onclick="closeModal('modalCommander')">Annuler la course</button>
+      `;
+    }, 3000);
+  });
+
+  // Lógica Guardar Perfil
+  function sauvegarderProfil() {
+    const nouveauNom = document.getElementById('editNom').value;
+    const nouveauTel = document.getElementById('editTel').value;
+    const nouvelleZone = document.getElementById('editZone').value;
+    
+    document.getElementById('nomClient').textContent = nouveauNom;
+    document.getElementById('avatarClient').textContent = nouveauNom.charAt(0).toUpperCase();
+    document.getElementById('telClient').textContent = nouveauTel;
+    document.getElementById('zoneClient').textContent = nouvelleZone;
+    document.getElementById('txtDepartVal').textContent = nouvelleZone;
+    
+    closeModal('modalEdit');
+  }
+</script>
+
+</body>
+</html>

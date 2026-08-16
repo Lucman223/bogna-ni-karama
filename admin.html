@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administration — Bogna Ni Karama</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body class="admin-corps">
+
+<!-- ===================== CONNEXION ===================== -->
+<div class="page-connexion" id="page-connexion">
+  <div class="carte-connexion">
+    <div class="marque">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Administration</span>
+      </div>
+    </div>
+    <h1>Espace administrateur</h1>
+    <p class="sous">Connectez-vous pour gérer la flotte</p>
+
+    <div class="alerte alerte-info" style="font-size:13.5px;">
+      <span class="alerte-icone" aria-hidden="true">🔑</span>
+      <div>
+        <strong>Espace réservé</strong>
+        Vos identifiants vous ont été communiqués séparément.
+      </div>
+    </div>
+
+    <form id="form-connexion" novalidate>
+      <div class="groupe">
+        <label for="utilisateur">Utilisateur</label>
+        <input type="text" id="utilisateur" autocomplete="username">
+      </div>
+      <div class="groupe">
+        <label for="motdepasse">Mot de passe</label>
+        <input type="password" id="motdepasse" autocomplete="current-password">
+      </div>
+      <p class="erreur" id="err-connexion" style="margin-bottom:14px;"></p>
+      <button class="btn btn-principal btn-large" type="submit">Se connecter</button>
+    </form>
+    <p style="text-align:center; margin:20px 0 0; font-size:13.5px;">
+      <a href="index.html" style="color:var(--texte-doux);">← Retour au site public</a>
+    </p>
+  </div>
+</div>
+
+<!-- ===================== PANNEAU ===================== -->
+<div id="panneau" hidden>
+
+  <header class="admin-entete">
+    <div class="conteneur admin-entete-int">
+      <a class="marque" href="admin.html" style="text-decoration:none;">
+        <div class="marque-logo" aria-hidden="true">🛵</div>
+        <div class="marque-texte">
+          <strong>Bogna Ni Karama</strong>
+          <span>Administration</span>
+        </div>
+      </a>
+      <nav class="admin-nav">
+        <a href="index.html" target="_blank" rel="noopener">Voir le site ↗</a>
+        <button type="button" id="btn-export">Exporter (CSV)</button>
+        <button type="button" id="btn-reinit-demo">Réinitialiser la démo</button>
+        <button type="button" id="btn-deconnexion">Se déconnecter</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section" style="padding-top:26px;">
+    <div class="conteneur">
+
+      <div class="alerte alerte-attention" id="alerte-attente" hidden>
+        <span class="alerte-icone" aria-hidden="true">⏳</span>
+        <div>
+          <strong><span id="nb-attente"></span> inscription(s) en attente de validation</strong>
+          Vérifiez l'identité, l'immatriculation et, si le chauffeur l'a déclaré,
+          la présence réelle du dossier de séparation sur la moto.
+        </div>
+      </div>
+
+      <div class="alerte alerte-info" id="alerte-equipement" hidden>
+        <span class="alerte-icone" aria-hidden="true">🔧</span>
+        <div>
+          <strong><span id="nb-equipement"></span> chauffeur(s) en attente d'équipement</strong>
+          Leur moto n'a pas encore de dossier de séparation. Mettez-les en relation
+          avec l'atelier partenaire, puis cliquez sur « Moto équipée » une fois
+          l'installation faite.
+        </div>
+      </div>
+
+      <!-- Statistiques -->
+      <div class="grille-stats" id="stats"></div>
+
+      <!-- Fonctions de la formule Complète : visibles, verrouillées -->
+      <div class="bloc-verrouille">
+        <div class="verrou-tete">
+          <h2>Statistiques et revenus</h2>
+          <span class="etiquette-formule">Formule Complète</span>
+        </div>
+        <div class="grille-stats grille-verrouillee" aria-hidden="true">
+          <div class="tuile"><span>Courses aujourd'hui</span><strong>38</strong></div>
+          <div class="tuile"><span>Revenus du mois</span><strong>1 240 000</strong></div>
+          <div class="tuile"><span>Quartier le plus actif</span><strong>Hamdallaye</strong></div>
+          <div class="tuile"><span>Meilleur chauffeur</span><strong>I. Keïta</strong></div>
+        </div>
+        <div class="verrou-voile">
+          <p class="verrou-icone" aria-hidden="true">🔒</p>
+          <p class="verrou-titre">Tableau de bord et espace chauffeur</p>
+          <p class="verrou-texte">
+            Suivez vos courses, vos revenus et vos quartiers les plus actifs.
+            L'attribution au chauffeur le plus proche devient automatique, et
+            chaque chauffeur suit ses courses et ses gains.
+          </p>
+          <a class="btn btn-principal btn-petit" href="offres.html">Voir la formule Complète</a>
+        </div>
+      </div>
+
+      <!-- Tableau -->
+      <div class="carte-tableau">
+        <div class="tableau-tete">
+          <h2>Gestion de la flotte</h2>
+          <div class="onglets" id="onglets"></div>
+        </div>
+
+        <div style="padding:14px 20px; border-bottom:1px solid var(--bord);">
+          <label class="saut-contenu" for="recherche-admin">Rechercher</label>
+          <input type="search" id="recherche-admin" placeholder="Rechercher par nom, quartier, moto, immatriculation…">
+        </div>
+
+        <div class="enveloppe-tableau">
+          <table>
+            <thead>
+              <tr>
+                <th>Chauffeur</th>
+                <th>Quartier</th>
+                <th>Moto</th>
+                <th>Immatriculation</th>
+                <th>Dossier</th>
+                <th>Inscrit le</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="corps-tableau"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const pageConnexion = document.getElementById('page-connexion');
+  const panneau = document.getElementById('panneau');
+
+  /* --- Connexion ----------------------------------------------- */
+  function afficherPanneau() {
+    pageConnexion.hidden = true;
+    panneau.hidden = false;
+    dessiner();
+  }
+
+  document.getElementById('form-connexion').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const u = document.getElementById('utilisateur').value.trim();
+    const m = document.getElementById('motdepasse').value;
+    const err = document.getElementById('err-connexion');
+
+    if (BNK.connexion(u, m)) {
+      err.classList.remove('visible');
+      afficherPanneau();
+    } else {
+      err.textContent = 'Utilisateur ou mot de passe incorrect.';
+      err.classList.add('visible');
+      document.getElementById('motdepasse').focus();
+    }
+  });
+
+  document.getElementById('btn-deconnexion').addEventListener('click', () => {
+    BNK.deconnexion();
+    panneau.hidden = true;
+    pageConnexion.hidden = false;
+    document.getElementById('motdepasse').value = '';
+  });
+
+  /* --- État de l'écran ----------------------------------------- */
+  let ongletActif = 'en_attente';   // on ouvre sur ce qui demande une action
+  // Après un rechargement, le navigateur restaure le texte du champ de
+  // recherche : on repart de sa valeur réelle pour que l'écran corresponde
+  // à ce qui est affiché dans le champ.
+  let recherche = document.getElementById('recherche-admin').value.trim();
+
+  /* --- Rendu ---------------------------------------------------- */
+  function dessinerStats() {
+    const s = BNK.statistiques();
+    document.getElementById('stats').innerHTML = `
+      <div class="tuile"><span>Total chauffeurs</span><strong>${s.total}</strong></div>
+      <div class="tuile"><span>Validés</span><strong>${s.valides}</strong></div>
+      <div class="tuile t-attente"><span>En attente</span><strong>${s.attente}</strong></div>
+      <div class="tuile t-dossier"><span>En équipement</span><strong>${s.equipement}</strong></div>
+      <div class="tuile t-suspendu"><span>Suspendus</span><strong>${s.suspendus}</strong></div>
+      <div class="tuile t-note"><span>Note moyenne</span><strong>${s.note}</strong></div>`;
+
+    const alerte = document.getElementById('alerte-attente');
+    alerte.hidden = s.attente === 0;
+    document.getElementById('nb-attente').textContent = s.attente;
+
+    const alerteEq = document.getElementById('alerte-equipement');
+    alerteEq.hidden = s.equipement === 0;
+    document.getElementById('nb-equipement').textContent = s.equipement;
+  }
+
+  function dessinerOnglets() {
+    const tous = BNK.listerChauffeurs();
+    const compte = (st) => tous.filter(c => c.statut === st).length;
+    const defs = [
+      { cle: 'en_attente', libelle: 'En attente',    n: compte('en_attente') },
+      { cle: 'equipement', libelle: 'En équipement', n: compte('equipement') },
+      { cle: 'valide',     libelle: 'Validés',       n: compte('valide') },
+      { cle: 'suspendu',   libelle: 'Suspendus',     n: compte('suspendu') },
+      { cle: 'refuse',     libelle: 'Refusés',       n: compte('refuse') },
+      { cle: '',           libelle: 'Tous',          n: tous.length },
+    ];
+    document.getElementById('onglets').innerHTML = defs.map(d => `
+      <button type="button" class="onglet ${d.cle === ongletActif ? 'actif' : ''}" data-onglet="${d.cle}">
+        ${d.libelle}<span class="compteur">${d.n}</span>
+      </button>`).join('');
+  }
+
+  function boutonsAction(c) {
+    const b = [];
+    if (c.statut === 'equipement') {
+      // Sa moto est à l'atelier : une fois le dossier posé, il passe en validation.
+      b.push(`<button class="btn btn-principal btn-petit" data-action="equipee" data-id="${c.id}">Moto équipée</button>`);
+      b.push(`<a class="btn btn-contour btn-petit" href="tel:+223${c.tel.replace(/\D/g, '')}">Appeler</a>`);
+    }
+    if (c.statut === 'en_attente') {
+      b.push(`<button class="btn btn-principal btn-petit" data-action="valide" data-id="${c.id}">Valider</button>`);
+      b.push(`<button class="btn btn-danger btn-petit" data-action="refuse" data-id="${c.id}">Refuser</button>`);
+    }
+    if (c.statut === 'valide') {
+      b.push(`<button class="btn btn-contour btn-petit" data-action="suspendu" data-id="${c.id}">Suspendre</button>`);
+    }
+    if (c.statut === 'suspendu' || c.statut === 'refuse') {
+      b.push(`<button class="btn btn-principal btn-petit" data-action="valide" data-id="${c.id}">Réactiver</button>`);
+    }
+    b.push(`<button class="btn btn-danger btn-petit" data-action="supprimer" data-id="${c.id}">Supprimer</button>`);
+    return b.join('');
+  }
+
+  function dessinerTableau() {
+    const liste = BNK.listerChauffeurs({ statut: ongletActif, recherche });
+    const corps = document.getElementById('corps-tableau');
+
+    if (!liste.length) {
+      corps.innerHTML = `<tr><td colspan="8">
+        <div class="vide">
+          <div class="vide-icone" aria-hidden="true">📋</div>
+          <h3>Aucun chauffeur dans cette liste</h3>
+          <p>${recherche ? 'Aucun résultat pour cette recherche.' : 'Rien à traiter ici pour le moment.'}</p>
+        </div></td></tr>`;
+      return;
+    }
+
+    corps.innerHTML = liste.map(c => `
+      <tr>
+        <td>
+          <div class="cellule-nom">
+            ${avatarHtml(c)}
+            <div>
+              <strong>${echapper(c.nom)}</strong>
+              <small>${echapper(c.tel)}</small>
+            </div>
+          </div>
+        </td>
+        <td>${echapper(c.zone)}</td>
+        <td>${echapper(c.moto)}</td>
+        <td>${echapper(c.immat)}</td>
+        <td>${c.dossier
+              ? '<span class="etiquette et-valide">Oui</span>'
+              : '<span class="etiquette et-refuse">Non</span>'}</td>
+        <td>${BNK.dateFr(c.inscrit)}</td>
+        <td>${etiquetteHtml(c.statut)}</td>
+        <td><div class="actions-ligne">${boutonsAction(c)}</div></td>
+      </tr>`).join('');
+  }
+
+  function dessiner() {
+    dessinerStats();
+    dessinerOnglets();
+    dessinerTableau();
+  }
+
+  /* --- Interactions --------------------------------------------- */
+  document.getElementById('onglets').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-onglet]');
+    if (!b) return;
+    ongletActif = b.dataset.onglet;
+    dessiner();
+  });
+
+  document.getElementById('corps-tableau').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-action]');
+    if (!b) return;
+    const { action, id } = b.dataset;
+    const c = BNK.chauffeur(id);
+    if (!c) return;
+
+    if (action === 'supprimer') {
+      if (!confirm(`Supprimer définitivement la fiche de ${c.nom} ?`)) return;
+      BNK.supprimerChauffeur(id);
+    } else if (action === 'equipee') {
+      // L'atelier a posé le dossier : la moto est équipée, la fiche repasse
+      // en attente de la validation habituelle (identité, immatriculation).
+      if (!confirm(`Confirmer que la moto de ${c.nom} est maintenant équipée du dossier ?`)) return;
+      BNK.marquerEquipee(id);
+    } else {
+      if (action === 'refuse' && !confirm(`Refuser l'inscription de ${c.nom} ?`)) return;
+      BNK.changerStatut(id, action);
+    }
+    dessiner();
+  });
+
+  let minuteur;
+  document.getElementById('recherche-admin').addEventListener('input', (e) => {
+    clearTimeout(minuteur);
+    const val = e.target.value;
+    minuteur = setTimeout(() => { recherche = val; dessinerTableau(); }, 180);
+  });
+
+  /* --- Export CSV ------------------------------------------------ */
+  document.getElementById('btn-export').addEventListener('click', () => {
+    const liste = BNK.listerChauffeurs();
+    const entetes = ['Nom', 'Téléphone', 'Quartier', 'Moto', 'Immatriculation', 'Expérience', 'Dossier', 'Statut', 'Note', 'Courses', 'Inscrit le'];
+    // Guillemets doublés : un nom peut contenir une virgule ou un guillemet.
+    const cellule = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const lignes = liste.map(c => [
+      c.nom, c.tel, c.zone, c.moto, c.immat, c.experience, c.dossier ? 'Oui' : 'Non',
+      BNK.STATUTS[c.statut].libelle, c.note || '', c.courses, BNK.dateFr(c.inscrit),
+    ].map(cellule).join(','));
+
+    // BOM UTF-8 pour qu'Excel affiche correctement les accents.
+    const csv = '﻿' + [entetes.map(cellule).join(','), ...lignes].join('\r\n');
+    const lien = document.createElement('a');
+    lien.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+    lien.download = `chauffeurs-bogna-ni-karama-${new Date().toISOString().slice(0, 10)}.csv`;
+    lien.click();
+    URL.revokeObjectURL(lien.href);
+  });
+
+  /* --- Réinitialiser la démo ------------------------------------- */
+  document.getElementById('btn-reinit-demo').addEventListener('click', () => {
+    if (!confirm('Remettre la démonstration à son état initial ? Les chauffeurs ajoutés seront perdus.')) return;
+    BNK.reinitialiser();
+    location.reload();
+  });
+
+  /* --- Démarrage -------------------------------------------------
+     En dernier : dessiner() a besoin de tout ce qui précède
+     (état de l'écran et fonctions de rendu) pour s'exécuter. */
+  if (BNK.connecte()) afficherPanneau();
+})();
+</script>
+</body>
+</html>

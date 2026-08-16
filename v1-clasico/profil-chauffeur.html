@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon Profil Chauffeur — Bogna Ni Karama</title>
+<link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="conteneur entete-int">
+    <a class="marque" href="index.html">
+      <div class="marque-logo" aria-hidden="true">🛵</div>
+      <div class="marque-texte">
+        <strong>Bogna Ni Karama</strong>
+        <span>Espace Conducteur</span>
+      </div>
+    </a>
+    <nav class="nav" id="nav-principale">
+      <a href="profil-chauffeur.html" class="actif">Mon Tableau de bord</a>
+      <a href="index.html" style="color:var(--rouge);">Déconnexion</a>
+    </nav>
+  </div>
+</header>
+
+<main class="section">
+  <div class="conteneur dashboard-grid">
+    
+    <!-- Sidebar -->
+    <aside class="perfil-sidebar" style="border-top: 4px solid var(--vert);">
+      <div class="perfil-avatar" id="avatarChauffeur" style="background: var(--vert);">M</div>
+      <h3 id="nomChauffeur">Moussa Diarra</h3>
+      <p id="telChauffeur">71 02 91 58</p>
+      
+      <div style="margin-top: 15px;">
+        <span style="display:inline-block; padding:4px 10px; background:#eef2ec; color:var(--vert); border-radius:20px; font-size:12px; font-weight:bold;">Moto Djakarta 125</span>
+      </div>
+
+      <div style="border-top: 1px solid var(--bord); padding-top: 20px; margin-top: 20px;">
+        <span class="section-oeil" style="font-size: 11px;">Note Globale</span>
+        <strong style="display:block; font-size: 18px; margin-top: 4px;">4.9 ⭐</strong>
+        <span style="font-size: 12px; color: var(--texte-doux);">(124 trajets)</span>
+      </div>
+      
+      <button class="btn btn-contour" style="margin-top: 20px;">Modifier mon profil</button>
+    </aside>
+
+    <!-- Contenu Principal -->
+    <div class="dashboard-contenido">
+      
+      <!-- Switch de estado -->
+      <div class="estado-switch">
+        <div>
+          <strong>En Ligne (Prêt à recevoir des clients)</strong>
+          <span style="font-size: 13px; color: var(--texte-doux);">Votre fiche est visible dans l'annuaire.</span>
+        </div>
+        <label class="bascule-dossier" style="background: var(--vert); color: white; border-color: var(--vert);">
+          <input type="checkbox" checked style="pointer-events: none;"> Actif
+        </label>
+      </div>
+      
+      <!-- Ingresos y stats -->
+      <div class="grille-stats">
+        <div class="tarjeta-dash" style="text-align: center; padding: 20px;">
+          <span style="font-size: 24px; color: var(--texte-doux); display: block;">Aujourd'hui</span>
+          <strong style="font-size: 32px; color: var(--vert); display: block; margin: 10px 0;">4 500 F</strong>
+          <span style="font-size: 14px;">5 Trajets terminés</span>
+        </div>
+        <div class="tarjeta-dash" style="text-align: center; padding: 20px;">
+          <span style="font-size: 24px; color: var(--texte-doux); display: block;">Cette Semaine</span>
+          <strong style="font-size: 32px; color: var(--texte); display: block; margin: 10px 0;">32 000 F</strong>
+          <span style="font-size: 14px;">34 Trajets terminés</span>
+        </div>
+      </div>
+
+      <div class="tarjeta-dash">
+        <h4><span aria-hidden="true">📋</span> Demandes Récentes</h4>
+        <div style="text-align: center; padding: 30px; color: var(--texte-doux);">
+          <span style="font-size: 40px; display: block; margin-bottom: 10px;">📡</span>
+          <p>En attente de clients...</p>
+          <p style="font-size: 12px;">Assurez-vous que votre application reste ouverte pour recevoir les notifications.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+  // Simular la carga de datos del registro
+  const urlParams = new URLSearchParams(window.location.search);
+  const nom = urlParams.get('nom') || 'Moussa Diarra';
+  const tel = urlParams.get('tel') || '71 02 91 58';
+  
+  document.getElementById('nomChauffeur').textContent = nom;
+  document.getElementById('avatarChauffeur').textContent = nom.charAt(0).toUpperCase();
+  document.getElementById('telChauffeur').textContent = tel;
+</script>
+
+</body>
+</html>
